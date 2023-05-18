@@ -1,12 +1,12 @@
 public class Agent {
-    int hunger;
+    boolean alive;
+    int position_x;
+    int position_y;
 
     void die(){
+        alive = false;
+    }
+    void update(){
 
     }
-    void hunger_increase(){
-
-    }
-
-
 }

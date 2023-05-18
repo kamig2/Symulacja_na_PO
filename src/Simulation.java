@@ -3,6 +3,4 @@ public class Simulation {
         System.out.printf("Hello and welcome!");
         System.out.println("cringe");
     }
-
-
     }

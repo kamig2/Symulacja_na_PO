@@ -3,4 +3,9 @@ public class Tadpole extends Frog{
     int growth_stage;
     int position_x;
     int position_y;
+    void move(){
+
+    }
+    void update(){
+    }
 }
