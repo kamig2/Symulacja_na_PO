@@ -7,4 +7,6 @@ public class Agent {
     void hunger_increase(){
 
     }
+
+
 }
