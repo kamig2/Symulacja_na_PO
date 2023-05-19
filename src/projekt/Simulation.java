@@ -1,9 +1,10 @@
+package projekt;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
-    private int size_x=5;
-    private int size_y=7;
+    static int size_x=5;
+    static int size_y=7;
     private int amount_frogs;
     private int amount_fish=6;
     private int amount_frogspawn=7;
@@ -13,6 +14,12 @@ public class Simulation {
     private List<Frog> frogs;
     private List<Fish> fish;
 
+    public static int getSize_x(){
+        return size_x;
+    }
+    public static int getSize_y(){
+        return size_y;
+    }
     public Simulation(){
         pond = new Pond(size_x, size_y, amount_fish,amount_frogspawn,amount_plankton);
         frogs = new ArrayList<>();

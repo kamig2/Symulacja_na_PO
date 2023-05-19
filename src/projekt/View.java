@@ -1,3 +1,4 @@
+package projekt;
 import javax.swing.*;
 
 public class View {

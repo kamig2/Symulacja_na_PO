@@ -1,3 +1,4 @@
+package projekt;
 public class Field {
     boolean has_plankton;
     boolean has_fish;
