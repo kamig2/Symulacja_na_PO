@@ -15,6 +15,9 @@ public class Field {
     public String getType(){
         return type;
     }
+    void disappear(){
+        type="EMPTY";
+    }
 
 
 }

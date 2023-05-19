@@ -1,8 +1,8 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Frog extends Agent {
 
-    Random random = new Random();
     int position_x;
     int position_y;
     enum Growth_stage{FROGSPAWN, TADPOLE, FROG}; // zastanawiam sie jeszcze bo wsm mozna by bylo zrobic to bez klas kijanka i skrzek
@@ -15,8 +15,17 @@ public class Frog extends Agent {
             growth_stage = Growth_stage.FROG;
         }
     }
+    //wydaje mi sie że można faktycznie usunąć te klasy skrzek i kijanka i robic wszystko w klasie Frog
     void eat(){
-        if (growth_stage == Growth_stage.TADPOLE){
+        if (growth_stage == Growth_stage.TADPOLE){//żaba je tylko wtedy gdy jest kijanką
+            if (hunger>0){
+                hunger--;
+                Field field = new Field("TADPOLE");
+                ArrayList<Field> array_row;
+                array_row = Pond.pond_array.get(position_y);
+                array_row.set(position_x,field); //zamiana typu pola na kijanke
+                Pond.pond_array.set(position_y,array_row);
+            }
         }
 
     }
@@ -32,6 +41,9 @@ public class Frog extends Agent {
             }
             position_x=x;
             position_y=y;
+            if (Pond.pond_array.get(position_y).get(position_x).getType().equals("PLANKTON")){ //jeśli na tym polu jest plankton to go je
+                eat();
+            }
         }
     }
     void update(){
