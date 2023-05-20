@@ -1,17 +1,20 @@
 package projekt;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Simulation {
     static final int TIME_STEP = 1000;
+    //static final int NUM_STEPS = 10;
     static int size_x=10;
     static int size_y=10;
     private int amount_frogs;
-    private int amount_fish=6;
-    private int amount_frogspawn=7;
+    private int amount_fish=0;
+    private int amount_frogspawn=40;
     private int amount_tadpole;
-    private int amount_plankton=5;
+    private int amount_plankton=0;
     private Pond pond;
+    private View view;
     private List<Frog> frogs;
     private List<Fish> fish;
 
@@ -21,10 +24,12 @@ public class Simulation {
     public static int getSize_y(){
         return size_y;
     }
+    public Pond getPond() {return pond;}
     public Simulation(){
         pond = new Pond(size_x, size_y, amount_fish,amount_frogspawn,amount_plankton);
         frogs = new ArrayList<>();
         fish = new ArrayList<>();
+        this.view = new View(this);
 
     }
     void update_pond(){
@@ -48,6 +53,7 @@ public class Simulation {
             }
             System.out.println();
             update_pond();
+            SwingUtilities.invokeLater(() -> view.update_grid_labels());
             long elapsed_time = System.currentTimeMillis() - start_time;
             long sleep_time = TIME_STEP - elapsed_time; //TIME_STEP ustawiłam na razie na jedną sekunde czyli chyba update jest co 1s
             try {
@@ -57,12 +63,18 @@ public class Simulation {
             }
             x++;
 
-        }while (x<10);//na razie dałam taki warunek żeby sprawdzić czy działa w ogóle
+        }while (x<20);//na razie dałam taki warunek żeby sprawdzić czy działa w ogóle
         System.out.println("Liczba wygranych żab: " + Frog.frogs_number);
     }
 
     public static void main(String[] args) { //wyswietlanie planszy jak narazie wstępne żeby widziec czy dziala
-        Simulation simulation = new Simulation();
-        simulation.simulate();
+        SwingUtilities.invokeLater(() -> {
+            Simulation simulation = new Simulation();
+            View view = new View(simulation);
+            view.create_and_show_gui();
+            simulation.view = view;
+            simulation.simulate();
+        });
+
     }
 }

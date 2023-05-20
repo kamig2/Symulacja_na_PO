@@ -12,7 +12,7 @@ abstract public class Agent {
         alive = false;
     }
 
-    boolean contains(int x, int y){//zmieniłam && na || bo tak chyba powinno być
+    boolean contains(int x, int y){
         if(x<0 || x>= Simulation.getSize_x() || y<0 || y>= Simulation.getSize_y()) return false;
         else return true;
     }

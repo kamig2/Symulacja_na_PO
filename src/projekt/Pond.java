@@ -1,5 +1,6 @@
 package projekt;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Pond {
@@ -8,29 +9,28 @@ public class Pond {
     Random random = new Random();
     static ArrayList<ArrayList<Field>> pond_array;
     static ArrayList<Fish> fish_array;
-    static ArrayList<Frog> frogs_array;//zmieniłam nazwe na frogs_aray bo wsumie odnosi sie to do każdego stadium żaby
+    static ArrayList<Frog> frogs_array;
 
-    void create_fish_array(int amount_fish){  // tworzenie tablicy przechowującej ryby trzeba zrobic jeszcze taką dla zab, planktonu itp
+    void create_fish_array(int amount_fish){
         fish_array = new ArrayList<>();
         for(int i = 0; i<amount_fish; i++){
             Fish fish = new Fish();
             fish_array.add(fish);
         }
     }
-    void create_frogs_array(int amount_frogspawn){ //tworzenie tablicy przechowującej skrzek tylko utworzyłam tu obiekt na klasie Frog
-        frogs_array = new ArrayList<>();           //bo wsumie faktycznie chyba łatwiej będzie zrobić tylko klase Frog
+    void create_frogs_array(int amount_frogspawn){
+        frogs_array = new ArrayList<>();
         for(int i = 0;i<amount_frogspawn;i++){
             Frog frog = new Frog();
             frogs_array.add(frog);
         }
     }
-    //nie utworzyłam metody do tworzenia listy dla planktonu bo nie mamy klasy plankton i nw jak by miała wyglądać ta lista
-    void create_pond_array2D(int x, int y) { //tworzenie tablicy dwuwymiarowej jak narazie pustej czyli staw
+    void create_pond_array2D(int x, int y) {
         pond_array = new ArrayList<>(x);
         for (int row = 0; row < size_y; row++) {
             ArrayList<Field> array_row = new ArrayList<>(y);
             for (int col = 0; col < size_x; col++) {
-                Field field = new Field("EMPTY"); //Dodałam typ pola
+                Field field = new Field("EMPTY");
                 array_row.add(field);
             }
             pond_array.add(array_row);
@@ -59,10 +59,10 @@ public class Pond {
             do {
                 x = random.nextInt(size_x);
                 y = random.nextInt(size_y);
-            } while (!(pond_array.get(y).get(x).get_is_empty())); //zmieniłam że zamiast sprawdzać czy typ pola to EMPTY to sprawdzam to za pomocą tego boolean
-            frogspawn.position_x = x;                             //lepiej to wyhygląda i jak będziemy jeszcze potrzebować sprawdzić typ pola to łatwiej będzie
+            } while (!(pond_array.get(y).get(x).get_is_empty()));
+            frogspawn.position_x = x;
             frogspawn.position_y= y;
-            Field field = new Field("FROGSPAWN");           //jeszcze sie zastanawiam jak można zrobić łatwiej zamiane typu pola ale na razie nie mam pomysłu
+            Field field = new Field("FROGSPAWN");
             ArrayList<Field> array_row;
             array_row = pond_array.get(y);
             array_row.set(x,field);   //zamiena typu pola na skrzek
@@ -83,28 +83,29 @@ public class Pond {
             pond_array.set(y,array_row);
         }
     }
-
-    static void delete_fish(){
-        for (Fish fish:fish_array){
-            if (!fish.alive){//nie wiem o co chodzi ale coś jest nie tak z tą metodą bo wyrzuca błąd
-                fish_array.remove(fish);
-                Field field = new Field("EMPTY"); //zamiana typu pola na empty
-                ArrayList<Field> array_row;
-                array_row = pond_array.get(fish.position_y);
-                array_row.set(fish.position_x,field);
-                pond_array.set(fish.position_y,array_row);
+    static void delete_fish() {
+        Iterator<Fish> iterator = fish_array.iterator(); //chat gpt zalecil zaimporowac jakas klase Iterator  i dziala juz więc najs
+        while (iterator.hasNext()) {
+            Fish fish = iterator.next();
+            if (!fish.alive) {
+                iterator.remove();
+                Field field = new Field("EMPTY");
+                ArrayList<Field> array_row = pond_array.get(fish.position_y);
+                array_row.set(fish.position_x, field);
+                pond_array.set(fish.position_y, array_row);
             }
         }
     }
-    static void delete_frog(){
-        for (Frog frog: frogs_array){
-            if (!frog.alive){
-                frogs_array.remove(frog);
-                Field field = new Field("EMPTY"); //zamiana typu pola na empty
-                ArrayList<Field> array_row;
-                array_row = pond_array.get(frog.position_y);
-                array_row.set(frog.position_x,field);
-                pond_array.set(frog.position_y,array_row);
+    static void delete_frog() {
+        Iterator<Frog> iterator = frogs_array.iterator(); //chat gpt zalecil zaimporowac jakas klase Iterator  i dziala juz więc najs
+        while (iterator.hasNext()) {
+            Frog frog = iterator.next();
+            if (!frog.alive) {
+                iterator.remove();
+                Field field = new Field("EMPTY");
+                ArrayList<Field> array_row = pond_array.get(frog.position_y);
+                array_row.set(frog.position_x, field);
+                pond_array.set(frog.position_y, array_row);
             }
         }
     }

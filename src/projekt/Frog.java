@@ -91,13 +91,15 @@ public class Frog extends Agent  {
         array_row1.set(x1,field1);
         Pond.pond_array.set(y1,array_row1);
     }
-    //tą metode contains dałam do klasy agent bo będzie też potrzebna w klasie Fish
 
     void update(){ //update wydaje mi sie żę musi być osobno dla ryby osobno dla żaby i oprócz tego ten update pond który jest w klasie Symulacja
-        age+=10;//wsumie to nw no ile zrobić żeby wzrastał wiek i głód na razie dazłam 10 tak tylko dla sprawdzenia
+        age+=1;//wsumie to nw no ile zrobić żeby wzrastał wiek i głód na razie dazłam 10 tak tylko dla sprawdzenia
         hunger+=10;
         if(hunger==100) die();
-        if (age==100) grow(); //dodałam warunek wieku żeby skrzek mógł rosnąć w kijanke a kijanka w żabe
+        if (age==30) {
+            grow();//dodałam warunek wieku żeby skrzek mógł rosnąć w kijanke a kijanka w żabe
+            age=0;
+        }
         move();               //wydaje mi sie że spoko było by zrobić coś takiego że nie cały skrzek wyklówa się w tym samym czasie
     }
 
