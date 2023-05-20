@@ -1,7 +1,5 @@
 package projekt;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Pond {
@@ -9,8 +7,8 @@ public class Pond {
     int size_y;
     Random random = new Random();
     static ArrayList<ArrayList<Field>> pond_array;
-    ArrayList<Fish> fish_array;
-    ArrayList<Frog> frogspawn_array;
+    static ArrayList<Fish> fish_array;
+    static ArrayList<Frog> frogspawn_array;
 
     void create_fish_array(int amount_fish){  // tworzenie tablicy przechowującej ryby trzeba zrobic jeszcze taką dla zab, planktonu itp
         fish_array = new ArrayList<>();
@@ -44,7 +42,7 @@ public class Pond {
         for (Fish fish:fish_array){
             x= random.nextInt(size_x);
             y= random.nextInt(size_y);
-            while (!(pond_array.get(y).get(x).getType().equals("EMPTY"))){ //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
+            while (!(pond_array.get(y).get(x).get_is_empty())){ //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
                 x = random.nextInt(size_x);
                 y = random.nextInt(size_y);
             }
@@ -63,10 +61,10 @@ public class Pond {
             do {
                 x = random.nextInt(size_x);
                 y = random.nextInt(size_y);
-            } while (!(pond_array.get(y).get(x).getType().equals("EMPTY"))); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
-            frogspawn.position_x = x;
+            } while (!(pond_array.get(y).get(x).get_is_empty())); //zmieniłam że zamiast sprawdzać czy typ pola to EMPTY to sprawdzam to za pomocą tego boolean
+            frogspawn.position_x = x;                             //lepiej to wyhygląda i jak będziemy jeszcze potrzebować sprawdzić typ pola to łatwiej będzie
             frogspawn.position_y= y;
-            Field field = new Field("FROGSPAWN");
+            Field field = new Field("FROGSPAWN");           //jeszcze sie zastanawiam jak można zrobić łatwiej zamiane typu pola ale na razie nie mam pomysłu
             ArrayList<Field> array_row;
             array_row = pond_array.get(y);
             array_row.set(x,field);   //zamiena typu pola na skrzek
@@ -79,7 +77,7 @@ public class Pond {
             do {
                 x = random.nextInt(size_x);
                 y = random.nextInt(size_y);
-            } while (!(pond_array.get(y).get(x).getType().equals("EMPTY"))); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
+            } while (!(pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
             Field field = new Field("PLANKTON");
             ArrayList<Field> array_row;
             array_row = pond_array.get(y);
@@ -88,7 +86,7 @@ public class Pond {
         }
     }
 
-    void delete_fish(){//usuwanie ryby z planszy jeśli umrze
+    static void delete_fish(){//usuwanie ryby z planszy jeśli umrze
         for (Fish fish:fish_array){
             if (!fish.alive){
                 fish_array.remove(fish); // usuwanie ryby z listy
@@ -100,7 +98,7 @@ public class Pond {
             }
         }
     }
-    void delete_frog(){ //usuwanie żaby z planszy jeśli umrze
+    static void delete_frog(){ //usuwanie żaby z planszy jeśli umrze
         for (Frog frog:frogspawn_array){
             if (!frog.alive){
                 frogspawn_array.remove(frog); // usuwanie ryby z listy
@@ -113,9 +111,7 @@ public class Pond {
         }
     }
 
-    void update_pond(){
-        for(Frog frog:frogspawn_array) frog.update_frog();
-    }
+    //metode update_pond dałam do klasy Simulaton bo tak było na diagramie klas
 
     Pond(int x, int y, int amount_fish, int amount_frogspawn, int amount_plankton){ // konstruktor
         size_x = x;
