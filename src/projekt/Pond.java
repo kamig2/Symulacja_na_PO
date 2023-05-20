@@ -8,7 +8,7 @@ public class Pond {
     Random random = new Random();
     static ArrayList<ArrayList<Field>> pond_array;
     static ArrayList<Fish> fish_array;
-    static ArrayList<Frog> frogspawn_array;
+    static ArrayList<Frog> frogs_array;//zmieniłam nazwe na frogs_aray bo wsumie odnosi sie to do każdego stadium żaby
 
     void create_fish_array(int amount_fish){  // tworzenie tablicy przechowującej ryby trzeba zrobic jeszcze taką dla zab, planktonu itp
         fish_array = new ArrayList<>();
@@ -17,11 +17,11 @@ public class Pond {
             fish_array.add(fish);
         }
     }
-    void create_frogspawn_array(int amount_frogspawn){ //tworzenie tablicy przechowującej skrzek tylko utworzyłam tu obiekt na klasie Frog
-        frogspawn_array = new ArrayList<>();           //bo wsumie faktycznie chyba łatwiej będzie zrobić tylko klase Frog
+    void create_frogs_array(int amount_frogspawn){ //tworzenie tablicy przechowującej skrzek tylko utworzyłam tu obiekt na klasie Frog
+        frogs_array = new ArrayList<>();           //bo wsumie faktycznie chyba łatwiej będzie zrobić tylko klase Frog
         for(int i = 0;i<amount_frogspawn;i++){
             Frog frog = new Frog();
-            frogspawn_array.add(frog);
+            frogs_array.add(frog);
         }
     }
     //nie utworzyłam metody do tworzenia listy dla planktonu bo nie mamy klasy plankton i nw jak by miała wyglądać ta lista
@@ -40,12 +40,10 @@ public class Pond {
     void place_fish(){ //Rozmieszczanie ryb na randomowej pozycji na planszy
         int x,y;
         for (Fish fish:fish_array){
-            x= random.nextInt(size_x);
-            y= random.nextInt(size_y);
-            while (!(pond_array.get(y).get(x).get_is_empty())){ //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
+            do {
                 x = random.nextInt(size_x);
                 y = random.nextInt(size_y);
-            }
+            }while (!(pond_array.get(y).get(x).get_is_empty()));//Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
             fish.position_x = x;
             fish.position_y= y;
             Field field = new Field("FISH");
@@ -57,7 +55,7 @@ public class Pond {
     }
     void place_frogspawn(){//Rozmieszczanie skrzeku na randomowe miejsca na planszy
         int x,y;
-        for (Frog frogspawn : frogspawn_array){
+        for (Frog frogspawn : frogs_array){
             do {
                 x = random.nextInt(size_x);
                 y = random.nextInt(size_y);
@@ -86,25 +84,25 @@ public class Pond {
         }
     }
 
-    static void delete_fish(){//usuwanie ryby z planszy jeśli umrze
+    static void delete_fish(){
         for (Fish fish:fish_array){
-            if (!fish.alive){
-                fish_array.remove(fish); // usuwanie ryby z listy
+            if (!fish.alive){//nie wiem o co chodzi ale coś jest nie tak z tą metodą bo wyrzuca błąd
+                fish_array.remove(fish);
                 Field field = new Field("EMPTY"); //zamiana typu pola na empty
                 ArrayList<Field> array_row;
-                array_row = pond_array.get(fish.position_x);
+                array_row = pond_array.get(fish.position_y);
                 array_row.set(fish.position_x,field);
                 pond_array.set(fish.position_y,array_row);
             }
         }
     }
-    static void delete_frog(){ //usuwanie żaby z planszy jeśli umrze
-        for (Frog frog:frogspawn_array){
+    static void delete_frog(){
+        for (Frog frog: frogs_array){
             if (!frog.alive){
-                frogspawn_array.remove(frog); // usuwanie ryby z listy
+                frogs_array.remove(frog);
                 Field field = new Field("EMPTY"); //zamiana typu pola na empty
                 ArrayList<Field> array_row;
-                array_row = pond_array.get(frog.position_x);
+                array_row = pond_array.get(frog.position_y);
                 array_row.set(frog.position_x,field);
                 pond_array.set(frog.position_y,array_row);
             }
@@ -118,7 +116,7 @@ public class Pond {
         size_y = y;
         create_pond_array2D(size_x, size_y);
         create_fish_array(amount_fish);
-        create_frogspawn_array(amount_frogspawn);
+        create_frogs_array(amount_frogspawn);
         place_fish();
         place_frogspawn();
         place_plankton(amount_plankton);
