@@ -6,8 +6,8 @@ import java.util.List;
 public class Simulation {
     static final int TIME_STEP = 1000;
     //static final int NUM_STEPS = 10;
-    static int size_x=500;
-    static int size_y=500;
+    static int size_x=800;
+    static int size_y=800;
     private int amount_frogs;
     private int amount_fish=0;
     private int amount_frogspawn=40;
@@ -67,10 +67,15 @@ public class Simulation {
     public static void main(String[] args) { //wyswietlanie planszy jak narazie wstępne żeby widziec czy dziala
 
         //Simulation simulation = new Simulation();
-        View view = new View(getSize_x(),getSize_y());
-
         //simulation.simulate();
 
+        View view = new View(getSize_x(),getSize_y());
+        view.draw_agent("FISH.png",100,100,40,30);
+        view.draw_agent("FROG.png",100,200,40,40);
+        view.draw_agent("TADPOLE.png",100,300,60,30);
+
+        //String workingDirectory = System.getProperty("user.dir");
+        //System.out.println("Working Directory: " + workingDirectory);
 
     }
 }
