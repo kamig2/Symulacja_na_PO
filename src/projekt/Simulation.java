@@ -1,5 +1,4 @@
 package projekt;
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,15 +7,11 @@ public class Simulation {
     //static final int NUM_STEPS = 10;
     static int size_x = 800;
     static int size_y = 800;
-    private int amount_frogs;
-    private int amount_fish = 5;
-    private int amount_frogspawn = 15;
-    private int amount_tadpole;
-    private int amount_plankton = 20;
+    private int amount_fish = 100;
+    private int amount_frogs = 60;
+    private int amount_plankton = 100;
     private Pond pond;
-    private View view;
-    private List<Frog> frogs;
-    private List<Fish> fish;
+    private ArrayList<Agent> agents;
 
     public static int getSize_x() {
         return size_x;
@@ -31,21 +26,21 @@ public class Simulation {
     }
 
     public Simulation() {
-        pond = new Pond(size_x, size_y, amount_fish, amount_frogspawn, amount_plankton);
-        frogs = new ArrayList<>();
-        fish = new ArrayList<>();
+        pond = new Pond(size_x, size_y, amount_fish, amount_frogs, amount_plankton);
+        //frogs = new ArrayList<>();
+        //fish = new ArrayList<>();
     }
 
     void update_pond() {
         for (Frog frog : Pond.frogs_array) frog.update();
         for (Fish fish : Pond.fish_array) fish.update();
-        Pond.delete_fish(); //przy każdym update będzie sprawdzane które ryby i żaby nie żyją i nie żywe będą usuwane
+        Pond.delete_fish();
         Pond.delete_frog();
     }
 
 
-    void simulate(){//kurwa nie wiem jak to zrobiś żęby to dobrze działałao już prubowałam na różne sposoby ale nie wychodzi
-        int i=1,j,x=0;//cały czas jest tak że pojawiają sie nowe obrazki ale stare nie znikają narazie zostawiam to tak
+    void simulate(){
+        int i=1,j,x=0;
         View view = new View(getSize_x(),getSize_y());
         do{
             i=1;
@@ -62,9 +57,10 @@ public class Simulation {
                     }else if (field.get_has_plankton()){
                         view.draw_agent("PLANKTON.png",j,i,40,40);
                     }else if (field.get_has_frog()) {
+                        view.remove_agent(j,i);
                         view.draw_agent("FROG.png", j, i, 40, 40);
                     }else {
-                        view.remove_agent(j,i); // Usuwanie obrazka, jeśli pole jest puste
+                        view.remove_agent(j,i);
                     }
                     j++;
                 }
@@ -80,27 +76,19 @@ public class Simulation {
                 throw new RuntimeException(e);
             }
             x++;
-            //view.updateView(Pond.pond_array);
-        }while (x<30);
+        }while (Pond.fish_array.size()>0 || Pond.fish_array.size()>0);
         System.out.println("Liczba wygranych żab: " + Frog.frogs_number);
     }
 
 
 
 
-    public static void main(String[] args) { //wyswietlanie planszy jak narazie wstępne żeby widziec czy dziala
+    public static void main(String[] args) {
 
         Simulation simulation = new Simulation();
         simulation.simulate();
 
-        /*View view = new View(getSize_x(),getSize_y());
-        view.draw_agent("FISH.png",100,100,40,30);
-        view.draw_agent("FROG.png",100,200,40,40);
-        view.draw_agent("TADPOLE.png",100,300,60,30);
-        view.draw_agent("PLANKTON.png",1,400,50,50);
-*/
-        //String workingDirectory = System.getProperty("user.dir");
-        //System.out.println("Working Directory: " + workingDirectory);
+
 
     }
 }

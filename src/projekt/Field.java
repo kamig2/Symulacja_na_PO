@@ -36,4 +36,21 @@ public class Field {
         return has_tadpole;
     }
     public boolean get_has_frog(){return has_frog;}
+
+    public void set_type(String type){//dodałam metode która zmienia typ pola
+        this.type=type;
+        is_empty=false;
+        has_fish=false;
+        has_frogspawn=false;
+        has_plankton=false;
+        has_tadpole=false;
+        has_frog=false;
+        if (type.equals("EMPTY")) is_empty=true;
+        if (type.equals("FISH")) has_fish=true;
+        if (type.equals("FROGSPAWN")) has_frogspawn=true;
+        if (type.equals("PLANKTON")) has_plankton = true;
+        if (type.equals("TADPOLE")) has_tadpole=true;
+        if (type.equals("FROG")) has_frog=true;
+
+    }
 }

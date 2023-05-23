@@ -46,11 +46,7 @@ public class Pond {
             }while (!(pond_array.get(y).get(x).get_is_empty()));//Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
             fish.position_x = x;
             fish.position_y= y;
-            Field field = new Field("FISH");
-            ArrayList<Field> array_row;
-            array_row = pond_array.get(y);
-            array_row.set(x,field); //zamiana typu pola na rybe
-            pond_array.set(y,array_row);
+            pond_array.get(fish.position_y).get(fish.position_x).set_type("FISH");
         }
     }
     void place_frogspawn(){//Rozmieszczanie skrzeku na randomowe miejsca na planszy
@@ -97,7 +93,7 @@ public class Pond {
         }
     }
     static void delete_frog() {
-        Iterator<Frog> iterator = frogs_array.iterator(); //chat gpt zalecil zaimporowac jakas klase Iterator  i dziala juz więc najs
+        Iterator<Frog> iterator = frogs_array.iterator();
         while (iterator.hasNext()) {
             Frog frog = iterator.next();
             if (!frog.alive) {

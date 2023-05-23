@@ -22,7 +22,7 @@ public class Frog extends Agent  {
             growth_stage = Growth_stage.FROG;
             win=true;
             frogs_number++;
-            Field field = new Field("FROG");//Zmiana typu pola na FROG tylko nie wiem jak to chcemy zrobić żę te żaby będą dalej widoczne w stawie czy nie
+            Field field = new Field("FROG");
             ArrayList<Field> array_row;
             array_row = Pond.pond_array.get(position_y);
             array_row.set(position_x,field);
@@ -59,18 +59,18 @@ public class Frog extends Agent  {
         y1=position_y;
         do {
             do {
-                sign=random.nextInt(2);//dobra to wygląda troche dziwnie ale nie wiedziałam jak to inaczej zrobić żeby działało
-                if (sign==0) {            //ale ta zmienna sign jest po to aby wylosować czy mamodjąć od aktualnej pozycji 1 lub 0 czy dodać 1 lub 0
-                    x = position_x + random.nextInt(100);//bo chodzi o to żeby kijanka mogła sie przemieścić tylko na sąsiadujące pole
+                sign=random.nextInt(2);
+                if (sign==0) {
+                    x = position_x + random.nextInt(10);
                 }else {
-                    x = position_x - random.nextInt(100);
+                    x = position_x - random.nextInt(10);
                 }
                 sign=random.nextInt(2);
                 if (sign==0){
 
-                    y = position_y+random.nextInt(100);
+                    y = position_y+random.nextInt(10);
                 }else {
-                    y = position_y - random.nextInt(100);
+                    y = position_y - random.nextInt(10);
                 }
             }while (!contains(x,y));//a ten warunek dałam żeby był wczesniej sprawdzony żeby przypadkiem nie podać do tablicy ujemnego indexu
         } while (Pond.pond_array.get(position_y).get(position_x).get_has_fish()  || (x==position_x && y==position_y) || Pond.pond_array.get(position_y).get(position_x).get_has_frogspawn());//dodałam warunek żeby kijanka nie mogła wejść na to samo pole co skrzek
@@ -93,9 +93,9 @@ public class Frog extends Agent  {
 
     void update() {
         age += 20;
-        hunger += 10;
+        if (growth_stage != Growth_stage.FROGSPAWN) hunger += 20;
         if (hunger == 100) die();
-        if (age >= 30+ random.nextInt(10)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
+        if (age >= 50+ random.nextInt(40)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
             grow();
             age = 0;
         }
