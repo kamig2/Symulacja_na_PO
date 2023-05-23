@@ -1,6 +1,7 @@
 package projekt;
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 
 public class View extends JFrame {
@@ -17,7 +18,7 @@ public class View extends JFrame {
         this.setVisible(true);
     }
 
-    public void draw_agent(String image_path,int position_x, int position_y, int width, int height){
+    public JLabel draw_agent(String image_path,int position_x, int position_y, int width, int height){
         ImageIcon original_fish = new ImageIcon(image_path);
         Image original_fish_im = original_fish.getImage();
         Image resized_fish_im = original_fish_im.getScaledInstance(width,height,Image.SCALE_SMOOTH);
@@ -28,6 +29,15 @@ public class View extends JFrame {
         this.getContentPane().add(label);
         this.revalidate();
         this.repaint();
+        return label;
+    }
+
+
+    public void remove_agent(JLabel label) {//to metoda do usuwania obrazka tylko nie wiem za bardzo skąd wziąć ten label w metodziie simulate
+            this.getContentPane().remove(label);//żeby usuwało niepotrzebne obrazki
+            this.revalidate();
+            this.repaint();
+
     }
 
 

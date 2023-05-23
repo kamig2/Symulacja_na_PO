@@ -5,7 +5,8 @@ public class Field {
     private boolean has_fish=false;
     private boolean has_frogspawn=false;
     private boolean has_tadpole=false;
-     String type;
+    private boolean has_frog = false;
+    private String type;
     Field(String type){
         this.type=type;
         if (type.equals("EMPTY")) is_empty=true;
@@ -13,6 +14,7 @@ public class Field {
         if (type.equals("FROGSPAWN")) has_frogspawn=true;
         if (type.equals("PLANKTON")) has_plankton = true;
         if (type.equals("TADPOLE")) has_tadpole=true;
+        if (type.equals("FROG")) has_frog=true;
     }
     public String getType(){
         return type;
@@ -32,7 +34,5 @@ public class Field {
     public boolean get_has_tadpole(){
         return has_tadpole;
     }
-    void disappear(){
-        type="EMPTY";
-    }
+    public boolean get_has_frog(){return has_frog;}
 }

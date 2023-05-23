@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class Frog extends Agent  {
 
-    private int age=0; //dodałam pole wiek będzie określać w jakim wieku jest żaba w sensie czy juz może rosnąć czy jeszcze nie
-    boolean win = false;//dodqałam pole żeby zmienić je na tru jak kijanka stanie sie żabą wtedy ta żaba wygrywa
-    static int frogs_number=0;//dodałam pole żaby zliczało wygrane żaby
+    private int age=0;
+    boolean win = false;
+    static int frogs_number=0;
     enum Growth_stage{FROGSPAWN, TADPOLE, FROG};
     Growth_stage growth_stage = Growth_stage.FROGSPAWN;
     private void grow(){
@@ -18,8 +18,7 @@ public class Frog extends Agent  {
             array_row = Pond.pond_array.get(position_y);
             array_row.set(position_x,field);
             Pond.pond_array.set(position_y,array_row);
-        }
-        if(growth_stage==Growth_stage.TADPOLE) {
+        }else if(growth_stage==Growth_stage.TADPOLE) {
             growth_stage = Growth_stage.FROG;
             win=true;
             frogs_number++;
@@ -30,7 +29,7 @@ public class Frog extends Agent  {
             Pond.pond_array.set(position_y,array_row);
         }
     }
-    //nie wiem czy tą funkcje z planktonem nie lepiej dać do innej klasy albo do field albo do pond bo wsumie tu tak troche nie pasuje ale to można sie zastanowić
+
     void respawn_plankton(){ // funkcja odradzania się planktonu po zjedzeniu
         int x,y;
         do {
@@ -62,16 +61,16 @@ public class Frog extends Agent  {
             do {
                 sign=random.nextInt(2);//dobra to wygląda troche dziwnie ale nie wiedziałam jak to inaczej zrobić żeby działało
                 if (sign==0) {            //ale ta zmienna sign jest po to aby wylosować czy mamodjąć od aktualnej pozycji 1 lub 0 czy dodać 1 lub 0
-                    x = position_x + random.nextInt(2);//bo chodzi o to żeby kijanka mogła sie przemieścić tylko na sąsiadujące pole
+                    x = position_x + random.nextInt(100);//bo chodzi o to żeby kijanka mogła sie przemieścić tylko na sąsiadujące pole
                 }else {
-                    x = position_x - random.nextInt(2);
+                    x = position_x - random.nextInt(100);
                 }
                 sign=random.nextInt(2);
                 if (sign==0){
 
-                    y = position_y+random.nextInt(2);
+                    y = position_y+random.nextInt(100);
                 }else {
-                    y = position_y - random.nextInt(2);
+                    y = position_y - random.nextInt(100);
                 }
             }while (!contains(x,y));//a ten warunek dałam żeby był wczesniej sprawdzony żeby przypadkiem nie podać do tablicy ujemnego indexu
         } while (Pond.pond_array.get(position_y).get(position_x).get_has_fish()  || (x==position_x && y==position_y) || Pond.pond_array.get(position_y).get(position_x).get_has_frogspawn());//dodałam warunek żeby kijanka nie mogła wejść na to samo pole co skrzek
@@ -92,15 +91,14 @@ public class Frog extends Agent  {
         Pond.pond_array.set(y1,array_row1);
     }
 
-    void update(){ //update wydaje mi sie żę musi być osobno dla ryby osobno dla żaby i oprócz tego ten update pond który jest w klasie Symulacja
-        age+=1;//wsumie to nw no ile zrobić żeby wzrastał wiek i głód na razie dazłam 10 tak tylko dla sprawdzenia
-        hunger+=10;
-        if(hunger==100) die();
-        if (age==30) {
-            grow();//dodałam warunek wieku żeby skrzek mógł rosnąć w kijanke a kijanka w żabe
-            age=0;
+    void update() {
+        age += 5;
+        hunger += 10;
+        if (hunger == 100) die();
+        if (age >= 30+ random.nextInt(10)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
+            grow();
+            age = 0;
         }
-        move();               //wydaje mi sie że spoko było by zrobić coś takiego że nie cały skrzek wyklówa się w tym samym czasie
+        move();
     }
-
 }
