@@ -5,6 +5,7 @@ public class Field {
     private boolean has_fish=false;
     private boolean has_frogspawn=false;
     private boolean has_tadpole=false;
+
     private boolean has_frog = false;
     private String type;
     Field(String type){

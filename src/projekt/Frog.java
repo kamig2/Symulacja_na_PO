@@ -92,7 +92,7 @@ public class Frog extends Agent  {
     }
 
     void update() {
-        age += 5;
+        age += 20;
         hunger += 10;
         if (hunger == 100) die();
         if (age >= 30+ random.nextInt(10)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie

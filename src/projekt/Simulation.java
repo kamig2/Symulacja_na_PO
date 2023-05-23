@@ -9,10 +9,10 @@ public class Simulation {
     static int size_x = 800;
     static int size_y = 800;
     private int amount_frogs;
-    private int amount_fish = 20;
-    private int amount_frogspawn = 40;
+    private int amount_fish = 5;
+    private int amount_frogspawn = 15;
     private int amount_tadpole;
-    private int amount_plankton = 5;
+    private int amount_plankton = 20;
     private Pond pond;
     private View view;
     private List<Frog> frogs;
@@ -58,11 +58,13 @@ public class Simulation {
                     }else if (field.get_has_tadpole()){
                         view.draw_agent("TADPOLE.png",j,i,40,40);
                     } else if (field.get_has_frogspawn()) {
-                        view.draw_agent("FROGSPAWN.jpg",j,i,40,40);
+                        view.draw_agent("FROGSPAWN.png",j,i,40,40);
                     }else if (field.get_has_plankton()){
                         view.draw_agent("PLANKTON.png",j,i,40,40);
                     }else if (field.get_has_frog()) {
                         view.draw_agent("FROG.png", j, i, 40, 40);
+                    }else {
+                        view.remove_agent(j,i); // Usuwanie obrazka, jeśli pole jest puste
                     }
                     j++;
                 }

@@ -11,7 +11,7 @@ public class View extends JFrame {
         this.setTitle("Simulation Frogs");
         this.setResizable(false);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.getContentPane().setBackground(Color.black);
+        this.getContentPane().setBackground(Color.CYAN);
         ImageIcon icon = new ImageIcon("FROG.png");
         this.setIconImage(icon.getImage());
         this.setLayout(null);
@@ -33,12 +33,22 @@ public class View extends JFrame {
     }
 
 
-    public void remove_agent(JLabel label) {//to metoda do usuwania obrazka tylko nie wiem za bardzo skąd wziąć ten label w metodziie simulate
-            this.getContentPane().remove(label);//żeby usuwało niepotrzebne obrazki
-            this.revalidate();
-            this.repaint();
-
+    public void remove_agent(int position_x, int position_y) { //poprawione
+        Component[] components = this.getContentPane().getComponents();
+        for (Component component : components) {
+            if (component instanceof JLabel) {
+                JLabel label = (JLabel) component;
+                int x = label.getX();
+                int y = label.getY();
+                int width = label.getWidth();
+                int height = label.getHeight();
+                if (x == position_x && y == position_y && width == 40 && height == 40) {
+                    this.getContentPane().remove(label);
+                    this.revalidate();
+                    this.repaint();
+                    break;
+                }
+            }
+        }
     }
-
-
 }
