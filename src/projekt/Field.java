@@ -7,18 +7,18 @@ public class Field {
     private boolean has_tadpole=false;
 
     private boolean has_frog = false;
-    private String type;
-    Field(String type){
-        this.type=type;
-        if (type.equals("EMPTY")) is_empty=true;
-        if (type.equals("FISH")) has_fish=true;
-        if (type.equals("FROGSPAWN")) has_frogspawn=true;
-        if (type.equals("PLANKTON")) has_plankton = true;
-        if (type.equals("TADPOLE")) has_tadpole=true;
-        if (type.equals("FROG")) has_frog=true;
+    private Field_type field_type;//zamiast typu pola jako String utworzyłam enum żeby było łatwiej to ustawiać
+    Field(Field_type type){
+        this.field_type=type;
+        if (type==Field_type.EMPTY) is_empty=true;
+        if (type==Field_type.FISH) has_fish=true;
+        if (type==Field_type.FROGSPAWN) has_frogspawn=true;
+        if (type==Field_type.PLANKTON) has_plankton = true;
+        if (type==Field_type.TADPOLE) has_tadpole=true;
+        if (type==Field_type.FROG) has_frog=true;
     }
-    public String getType(){
-        return type;
+    public Field_type getType(){
+        return field_type;
     }
     public boolean get_is_empty(){
         return is_empty;
@@ -37,20 +37,21 @@ public class Field {
     }
     public boolean get_has_frog(){return has_frog;}
 
-    public void set_type(String type){//dodałam metode która zmienia typ pola
-        this.type=type;
+    public void set_type(Field_type type){//dodałam metode która zmienia typ pola
+        this.field_type=type;
         is_empty=false;
         has_fish=false;
         has_frogspawn=false;
         has_plankton=false;
         has_tadpole=false;
         has_frog=false;
-        if (type.equals("EMPTY")) is_empty=true;
-        if (type.equals("FISH")) has_fish=true;
-        if (type.equals("FROGSPAWN")) has_frogspawn=true;
-        if (type.equals("PLANKTON")) has_plankton = true;
-        if (type.equals("TADPOLE")) has_tadpole=true;
-        if (type.equals("FROG")) has_frog=true;
+        if (type==Field_type.EMPTY) is_empty=true;
+        if (type==Field_type.FISH) has_fish=true;
+        if (type==Field_type.FROGSPAWN) has_frogspawn=true;
+        if (type==Field_type.PLANKTON) has_plankton = true;
+        if (type==Field_type.TADPOLE) has_tadpole=true;
+        if (type==Field_type.FROG) has_frog=true;
+
 
     }
 }

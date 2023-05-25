@@ -4,14 +4,19 @@ import java.util.ArrayList;
 
 public class Fish extends Agent{
 
-    void eat(Field eaten_field){ // rodzaj jedzonego pola jako parametr zeby wiedziec o ile ma sie zmniejszyc glod
-        if (eaten_field.get_has_tadpole()) hunger-=30; // głód się zmniejsza o 30 po zjedzeniu kijanki
-        if (hunger<0) hunger =0; // żeby głód nie mógł być na minusie
-        //trzeba jakoś uśmiercić tą kijanek którą zjada ryba
+    void eat(Field eaten_field, int x,int y){
+        if (eaten_field.get_has_tadpole()) hunger-=30;
+        if (hunger<0) hunger =0;
+        for (Agent agent :Pond.get_agents()){//usuwanie zjedzonej kijanki
+            if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
+                Pond.set_agents(Pond.get_agents().indexOf(agent));
+            }
+        }
     }
 
     void move(){
         int x,y,x1,y1,sign;
+        int[] position = new int[2];
         y1=position_y;
         x1=position_x;
         do {
@@ -26,17 +31,9 @@ public class Fish extends Agent{
         }while ((x==position_x && y==position_y )|| Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn());
         position_x=x;
         position_y=y;
-        if (Pond.pond_array.get(position_y).get(position_x).get_has_tadpole()) eat(Pond.pond_array.get(position_y).get(position_x));
-        Field field = new Field("FISH");
-        ArrayList<Field> array_row;
-        array_row = Pond.pond_array.get(position_y);
-        array_row.set(position_x,field);
-        Pond.pond_array.set(position_y,array_row);
-        Field field1 = new Field("EMPTY"); //zamiana pola na którym była ryba wcześniej na empty
-        ArrayList<Field> array_row1;
-        array_row1 = Pond.pond_array.get(y1);
-        array_row1.set(x1,field1);
-        Pond.pond_array.set(y1,array_row1);
+        if (Pond.pond_array.get(position_y).get(position_x).get_has_tadpole()) eat(Pond.pond_array.get(position_y).get(position_x),position_x,position_y);
+        Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.FISH);
+        Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
     }
     void update(){
         hunger+=20;

@@ -1,5 +1,6 @@
 package projekt;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 public class Frog extends Agent  {
@@ -13,41 +14,33 @@ public class Frog extends Agent  {
         if(growth_stage==Growth_stage.FROGSPAWN) {
             growth_stage = Growth_stage.TADPOLE;
             age=0;
-            Field field = new Field("TADPOLE");
-            ArrayList<Field> array_row;
-            array_row = Pond.pond_array.get(position_y);
-            array_row.set(position_x,field);
-            Pond.pond_array.set(position_y,array_row);
+            Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.TADPOLE);
         }else if(growth_stage==Growth_stage.TADPOLE) {
             growth_stage = Growth_stage.FROG;
             win=true;
             frogs_number++;
-            Field field = new Field("FROG");
-            ArrayList<Field> array_row;
-            array_row = Pond.pond_array.get(position_y);
-            array_row.set(position_x,field);
-            Pond.pond_array.set(position_y,array_row);
+            Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.FROG);
         }
     }
 
-    void respawn_plankton(){ // funkcja odradzania się planktonu po zjedzeniu
+   /* void respawn_plankton(){ // funkcja odradzania się planktonu po zjedzeniu
         int x,y;
         do {
             x = random.nextInt(Simulation.getSize_x());
             y = random.nextInt(Simulation.getSize_y());
-        } while (!(Pond.pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
+        } while (!(Pond.pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsc
         Field field = new Field("PLANKTON");
         ArrayList<Field> array_row;
         array_row = Pond.pond_array.get(y);
         array_row.set(x,field);   //zamiena typu pola na PLANKTON
         Pond.pond_array.set(y,array_row);
-    }
+    }*/
     private void eat(Field eaten_field){ // rodzaj jedzonego pola jako parametr zeby wiedziec o ile ma sie zmniejszyc glod
         if (growth_stage != Growth_stage.TADPOLE) return; // żaba je tylko wtedy gdy jest kijanką
         if (eaten_field.get_has_tadpole()) hunger=0; // głód się zeruje po zjedzeniu kijanki
         else if (eaten_field.get_has_plankton()) {
             hunger -= 50; // głód spada o połowe po zjedzeniu planktonu
-            respawn_plankton();
+            //respawn_plankton();
         }
         if (hunger<0) hunger =0; // żeby głód nie mógł być na minusie
     }
@@ -76,25 +69,18 @@ public class Frog extends Agent  {
         } while (Pond.pond_array.get(position_y).get(position_x).get_has_fish()  || (x==position_x && y==position_y) || Pond.pond_array.get(position_y).get(position_x).get_has_frogspawn());//dodałam warunek żeby kijanka nie mogła wejść na to samo pole co skrzek
         position_x=x;
         position_y=y;
-        if (Pond.pond_array.get(position_y).get(position_x).get_has_plankton() || Pond.pond_array.get(position_y).get(position_x).getType().equals("TADPOLE")){ //edytowane
+        if (Pond.pond_array.get(position_y).get(position_x).get_has_plankton() || Pond.pond_array.get(position_y).get(position_x).get_has_tadpole()){ //edytowane
             eat(Pond.pond_array.get(position_y).get(position_x));
         }
-        Field field = new Field("TADPOLE");
-        ArrayList<Field> array_row;
-        array_row = Pond.pond_array.get(position_y);
-        array_row.set(position_x,field);
-        Pond.pond_array.set(position_y,array_row);
-        Field field1 = new Field("EMPTY"); //zamiana pola na którym była kijanka wcześniej na empty
-        ArrayList<Field> array_row1;
-        array_row1 = Pond.pond_array.get(y1);
-        array_row1.set(x1,field1);
-        Pond.pond_array.set(y1,array_row1);
+        Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.TADPOLE);
+        Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
+
     }
 
     void update() {
         age += 20;
         if (growth_stage != Growth_stage.FROGSPAWN) hunger += 20;
-        if (hunger == 100) die();
+        if (hunger == 100 && growth_stage!=Growth_stage.FROG) die();//dodałam warunek że żąba nie może umrzeć
         if (age >= 50+ random.nextInt(40)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
             grow();
             age = 0;
