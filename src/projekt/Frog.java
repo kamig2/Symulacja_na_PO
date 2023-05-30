@@ -1,7 +1,4 @@
 package projekt;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
 
 public class Frog extends Agent  {
 
@@ -35,14 +32,15 @@ public class Frog extends Agent  {
         array_row.set(x,field);   //zamiena typu pola na PLANKTON
         Pond.pond_array.set(y,array_row);
     }*/
-    private void eat(Field eaten_field){ // rodzaj jedzonego pola jako parametr zeby wiedziec o ile ma sie zmniejszyc glod
-        if (growth_stage != Growth_stage.TADPOLE) return; // żaba je tylko wtedy gdy jest kijanką
-        if (eaten_field.get_has_tadpole()) hunger=0; // głód się zeruje po zjedzeniu kijanki
+
+    protected void eat(Field eaten_field){
+        if (growth_stage != Growth_stage.TADPOLE) return;
+        if (eaten_field.get_has_tadpole()) hunger=0; //trzeba dodać usuwanie zjedzonej kijanki z listy agentów metoda jhak w fish
         else if (eaten_field.get_has_plankton()) {
-            hunger -= 50; // głód spada o połowe po zjedzeniu planktonu
+            hunger -= 50;
             //respawn_plankton();
         }
-        if (hunger<0) hunger =0; // żeby głód nie mógł być na minusie
+        if (hunger<0) hunger =0;
     }
 
     private void move(){
@@ -67,16 +65,16 @@ public class Frog extends Agent  {
                 }
             }while (!contains(x,y));//a ten warunek dałam żeby był wczesniej sprawdzony żeby przypadkiem nie podać do tablicy ujemnego indexu
         } while (Pond.pond_array.get(position_y).get(position_x).get_has_fish()  || (x==position_x && y==position_y) || Pond.pond_array.get(position_y).get(position_x).get_has_frogspawn());//dodałam warunek żeby kijanka nie mogła wejść na to samo pole co skrzek
-        position_x=x;
-        position_y=y;
-        if (Pond.pond_array.get(position_y).get(position_x).get_has_plankton() || Pond.pond_array.get(position_y).get(position_x).get_has_tadpole()){ //edytowane
-            eat(Pond.pond_array.get(position_y).get(position_x));
+        if (Pond.pond_array.get(y).get(x).get_has_plankton() || Pond.pond_array.get(y).get(x).get_has_tadpole()){ //edytowane
+            eat(Pond.pond_array.get(y).get(x));
         }
+        position_y=y;
+        position_x=x;
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.TADPOLE);
         Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
 
     }
-
+    @Override
     void update() {
         age += 20;
         if (growth_stage != Growth_stage.FROGSPAWN) hunger += 20;

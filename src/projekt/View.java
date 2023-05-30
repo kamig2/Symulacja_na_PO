@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 
 public class View extends JFrame {
-    //static JLabel label;
     public View(int size_x, int size_y){
         this.setSize(Simulation.getSize_x(),Simulation.getSize_y());
         this.setTitle("Simulation Frogs");
@@ -51,4 +50,6 @@ public class View extends JFrame {
             }
         }
     }
+
+
 }

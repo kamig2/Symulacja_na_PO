@@ -41,7 +41,7 @@ public class Pond {
         }
     }
 
-    void place_agent(){//metoda do rozmieszczania agentów na planszy ale nie wiem co zrobić z tym planktonem xd
+    void place_agent(){
         int x,y;
         for (Agent agent:agents){
             do {
@@ -87,6 +87,18 @@ public class Pond {
             pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
         }
     }
+    /* void respawn_plankton(){ // funkcja odradzania się planktonu po zjedzeniu
+         int x,y;
+         do {
+             x = random.nextInt(Simulation.getSize_x());
+             y = random.nextInt(Simulation.getSize_y());
+         } while (!(Pond.pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsc
+         Field field = new Field("PLANKTON");
+         ArrayList<Field> array_row;
+         array_row = Pond.pond_array.get(y);
+         array_row.set(x,field);   //zamiena typu pola na PLANKTON
+         Pond.pond_array.set(y,array_row);
+     }*/
 
 
     Pond(int x, int y, int amount_fish, int amount_frogspawn, int amount_plankton){ // konstruktor

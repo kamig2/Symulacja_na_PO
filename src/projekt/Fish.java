@@ -1,9 +1,7 @@
 package projekt;
 
-import java.util.ArrayList;
 
 public class Fish extends Agent{
-
     void eat(Field eaten_field, int x,int y){
         if (eaten_field.get_has_tadpole()) hunger-=30;
         if (hunger<0) hunger =0;
@@ -16,7 +14,6 @@ public class Fish extends Agent{
 
     void move(){
         int x,y,x1,y1,sign;
-        int[] position = new int[2];
         y1=position_y;
         x1=position_x;
         do {
@@ -35,6 +32,7 @@ public class Fish extends Agent{
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.FISH);
         Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
     }
+    @Override
     void update(){
         hunger+=20;
         if(hunger==100) die();
