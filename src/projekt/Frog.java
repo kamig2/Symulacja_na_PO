@@ -20,20 +20,7 @@ public class Frog extends Agent  {
         }
     }
 
-   /* void respawn_plankton(){ // funkcja odradzania się planktonu po zjedzeniu
-        int x,y;
-        do {
-            x = random.nextInt(Simulation.getSize_x());
-            y = random.nextInt(Simulation.getSize_y());
-        } while (!(Pond.pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsc
-        Field field = new Field("PLANKTON");
-        ArrayList<Field> array_row;
-        array_row = Pond.pond_array.get(y);
-        array_row.set(x,field);   //zamiena typu pola na PLANKTON
-        Pond.pond_array.set(y,array_row);
-    }*/
-
-    protected void eat(Field eaten_field){
+    protected void eat(Field eaten_field, int x, int y){
         if (growth_stage != Growth_stage.TADPOLE) return;
         if (eaten_field.get_has_tadpole()) hunger=0; //trzeba dodać usuwanie zjedzonej kijanki z listy agentów metoda jhak w fish
         else if (eaten_field.get_has_plankton()) {
@@ -41,9 +28,14 @@ public class Frog extends Agent  {
             //respawn_plankton();
         }
         if (hunger<0) hunger =0;
+        for (Agent agent :Pond.get_agents()){//usuwanie zjedzonej kijanki
+            if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
+                Pond.set_agents(Pond.get_agents().indexOf(agent));
+            }
+        }
     }
 
-    private void move(){
+    /*private void move(){
         if (growth_stage!=Growth_stage.TADPOLE) return;
         int x,y,sign,x1,y1;
         x1=position_x;
@@ -52,16 +44,16 @@ public class Frog extends Agent  {
             do {
                 sign=random.nextInt(2);
                 if (sign==0) {
-                    x = position_x + random.nextInt(10);
+                    x = position_x ++;
                 }else {
-                    x = position_x - random.nextInt(10);
+                    x = position_x --;
                 }
                 sign=random.nextInt(2);
                 if (sign==0){
 
-                    y = position_y+random.nextInt(10);
+                    y = position_y++;
                 }else {
-                    y = position_y - random.nextInt(10);
+                    y = position_y --;
                 }
             }while (!contains(x,y));//a ten warunek dałam żeby był wczesniej sprawdzony żeby przypadkiem nie podać do tablicy ujemnego indexu
         } while (Pond.pond_array.get(position_y).get(position_x).get_has_fish()  || (x==position_x && y==position_y) || Pond.pond_array.get(position_y).get(position_x).get_has_frogspawn());//dodałam warunek żeby kijanka nie mogła wejść na to samo pole co skrzek
@@ -73,9 +65,40 @@ public class Frog extends Agent  {
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.TADPOLE);
         Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
 
+    }*/
+    private void move(){
+        if (growth_stage!=Growth_stage.TADPOLE) return;
+        int x,y,sign,x1,y1;
+        x1=position_x;
+        y1=position_y;
+        do {
+            do {
+                sign=random.nextInt(2);
+                if (sign==0) {
+                    x = position_x + random.nextInt(2);
+                }else {
+                    x = position_x - random.nextInt(2);
+                }
+                sign=random.nextInt(2);
+                if (sign==0){
+                    y = position_y+random.nextInt(2);
+                }else {
+                    y = position_y - random.nextInt(2);
+                }
+            }while (!contains(x,y));//a ten warunek dałam żeby był wczesniej sprawdzony żeby przypadkiem nie podać do tablicy ujemnego indexu
+        } while (Pond.pond_array.get(position_y).get(position_x).get_has_fish()  || (x==position_x && y==position_y) || Pond.pond_array.get(position_y).get(position_x).get_has_frogspawn());//dodałam warunek żeby kijanka nie mogła wejść na to samo pole co skrzek
+        position_x=x;
+        position_y=y;
+        if (Pond.pond_array.get(position_y).get(position_x).get_has_plankton() || Pond.pond_array.get(position_y).get(position_x).get_has_tadpole()){ //edytowane
+            eat(Pond.pond_array.get(position_y).get(position_x), position_x, position_y);
+        }
+        Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.TADPOLE);
+        Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
+
     }
     @Override
     void update() {
+        //View view = new View(Simulation.getSize_x(),Simulation.getSize_y());
         age += 20;
         if (growth_stage != Growth_stage.FROGSPAWN) hunger += 20;
         if (hunger == 100 && growth_stage!=Growth_stage.FROG) die();//dodałam warunek że żąba nie może umrzeć
@@ -84,5 +107,6 @@ public class Frog extends Agent  {
             age = 0;
         }
         move();
+        //view.repaint();
     }
 }

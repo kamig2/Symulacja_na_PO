@@ -5,7 +5,6 @@ public class Field {
     private boolean has_fish=false;
     private boolean has_frogspawn=false;
     private boolean has_tadpole=false;
-
     private boolean has_frog = false;
     private Field_type field_type;//zamiast typu pola jako String utworzyłam enum żeby było łatwiej to ustawiać
     Field(Field_type type){
@@ -36,7 +35,6 @@ public class Field {
         return has_tadpole;
     }
     public boolean get_has_frog(){return has_frog;}
-
     public void set_type(Field_type type){//dodałam metode która zmienia typ pola
         this.field_type=type;
         is_empty=false;
@@ -51,7 +49,5 @@ public class Field {
         if (type==Field_type.PLANKTON) has_plankton = true;
         if (type==Field_type.TADPOLE) has_tadpole=true;
         if (type==Field_type.FROG) has_frog=true;
-
-
     }
 }

@@ -17,7 +17,6 @@ public class Pond {
         return agents;
     }
 
-
     void create_pond_array2D(int x, int y) {
         pond_array = new ArrayList<>(x);
         for (int row = 0; row < size_y; row++) {
@@ -41,7 +40,7 @@ public class Pond {
         }
     }
 
-    void place_agent(){
+    public void place_agent(){
         int x,y;
         for (Agent agent:agents){
             do {
@@ -64,8 +63,6 @@ public class Pond {
 
         }
     }
-
-
     static void delete_agent(){
         Iterator<Agent> iterator = agents.iterator();
         while (iterator.hasNext()){
@@ -76,16 +73,23 @@ public class Pond {
             }
         }
     }
-
-    void place_plankton(int amount_plankton){
-        int x,y;
-        for (int i=0;i<amount_plankton;i++){
+    void place_plankton(int amount_plankton) {
+        int x, y;
+        for (int i = 0; i < amount_plankton; i++) {
             do {
                 x = random.nextInt(size_x);
                 y = random.nextInt(size_y);
             } while (!(pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
             pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
         }
+    }
+    Pond(int x, int y, int amount_fish, int amount_frogspawn, int amount_plankton){ // konstruktor
+        size_x = x;
+        size_y = y;
+        create_pond_array2D(size_x, size_y);
+        create_agents_array(amount_fish,amount_frogspawn);
+        place_agent();
+        place_plankton(amount_plankton);
     }
     /* void respawn_plankton(){ // funkcja odradzania się planktonu po zjedzeniu
          int x,y;
@@ -99,16 +103,6 @@ public class Pond {
          array_row.set(x,field);   //zamiena typu pola na PLANKTON
          Pond.pond_array.set(y,array_row);
      }*/
-
-
-    Pond(int x, int y, int amount_fish, int amount_frogspawn, int amount_plankton){ // konstruktor
-        size_x = x;
-        size_y = y;
-        create_pond_array2D(size_x, size_y);
-        create_agents_array(amount_fish,amount_frogspawn);
-        place_agent();
-        place_plankton(amount_plankton);
-    }
 }
 
 

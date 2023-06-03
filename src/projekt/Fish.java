@@ -1,6 +1,4 @@
 package projekt;
-
-
 public class Fish extends Agent{
     void eat(Field eaten_field, int x,int y){
         if (eaten_field.get_has_tadpole()) hunger-=30;
@@ -11,7 +9,6 @@ public class Fish extends Agent{
             }
         }
     }
-
     void move(){
         int x,y,x1,y1,sign;
         y1=position_y;
@@ -19,11 +16,11 @@ public class Fish extends Agent{
         do {
             do {
                 sign=random.nextInt(2);
-                if (sign==0) x = position_x + random.nextInt(20);
-                else x = position_x - random.nextInt(20);
+                if (sign==0) x = position_x + random.nextInt(2);
+                else x = position_x - random.nextInt(2);
                 sign=random.nextInt(2);
-                if (sign==0) y = position_y+random.nextInt(20);
-                else y = position_y - random.nextInt(20);
+                if (sign==0) y = position_y+random.nextInt(2);
+                else y = position_y - random.nextInt(2);
             }while (!contains(x,y));
         }while ((x==position_x && y==position_y )|| Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn());
         position_x=x;
@@ -34,8 +31,10 @@ public class Fish extends Agent{
     }
     @Override
     void update(){
+        //View view = new View(Simulation.getSize_x(),Simulation.getSize_y());
         hunger+=20;
         if(hunger==100) die();
         move();
+        //view.repaint();
     }
 }
