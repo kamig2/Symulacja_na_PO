@@ -8,12 +8,18 @@ public class Simulation {
     static final int TIME_STEP = 1000;
     static int size_x = 15;
     static int size_y = 15;
-    private int amount_fish = 15;
-    private int amount_frogs = 15;
-    private int amount_plankton = 15;
+    private static int amount_fish = 30;
+    private static int amount_frogs = 15;
+    private static int amount_plankton = 15;
     private Pond pond;
     private View view;
     Random random = new Random();
+    public static int set_amount_fish(){
+        return amount_fish--;
+    }
+    public static int set_amount_frogs(){
+        return amount_frogs--;
+    }
     public static int getSize_x() {
         return size_x;
     }
@@ -29,7 +35,7 @@ public class Simulation {
     }
     void update_pond() {
         for (Agent agent: Pond.get_agents()){
-            agent.update();
+            if (agent.alive=true) agent.update();
         }
         Pond.delete_agent();
     }
@@ -51,13 +57,13 @@ public class Simulation {
             x++;
             System.out.println("Liczba żab: " + amount_frogs);
             System.out.println("Liczba ryb: " + amount_fish);
-            System.out.println("Liczba ryb: " + amount_plankton);
+            System.out.println("Liczba planktonu: " + amount_plankton);
             view.getContentPane().removeAll();
-            view.update_view(pond);
+            view.update_view(/*pond*/);
             view.revalidate();
             view.repaint();
-        } while (x < 10);
-        System.out.println("Liczba wygranych żab: " + Frog.frogs_number);
+        } while (x < 12);
+        System.out.println("Liczba wygranych żab: " + amount_frogs);
     }
     public static void main(String[] args) {
         Simulation simulation = new Simulation();

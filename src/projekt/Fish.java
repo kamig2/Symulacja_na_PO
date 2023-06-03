@@ -1,14 +1,17 @@
 package projekt;
 public class Fish extends Agent{
+    @Override
     void eat(Field eaten_field, int x,int y){
-        if (eaten_field.get_has_tadpole()) hunger-=30;
-        if (hunger<0) hunger =0;
-        for (Agent agent :Pond.get_agents()){//usuwanie zjedzonej kijanki
+        if (eaten_field.get_has_tadpole())hunger-=50;
+        for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
             if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
                 Pond.set_agents(Pond.get_agents().indexOf(agent));
+                break;
             }
         }
+        if (hunger<0) hunger =0;
     }
+    @Override
     void move(){
         int x,y,x1,y1,sign;
         y1=position_y;
@@ -23,18 +26,20 @@ public class Fish extends Agent{
                 else y = position_y - random.nextInt(2);
             }while (!contains(x,y));
         }while ((x==position_x && y==position_y )|| Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn());
+        if (Pond.pond_array.get(y).get(x).get_has_tadpole()) eat(Pond.pond_array.get(y).get(x),x,y);
         position_x=x;
         position_y=y;
-        if (Pond.pond_array.get(position_y).get(position_x).get_has_tadpole()) eat(Pond.pond_array.get(position_y).get(position_x),position_x,position_y);
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.FISH);
         Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
     }
     @Override
     void update(){
         //View view = new View(Simulation.getSize_x(),Simulation.getSize_y());
-        hunger+=20;
-        if(hunger==100) die();
-        move();
+        hunger+=10;
+        if(hunger==100) {
+            die();
+        }
+        if (alive==true)move();
         //view.repaint();
     }
 }

@@ -4,17 +4,16 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Pond {
-    int size_x;
-    int size_y;
+    static int size_x;
+    static int size_y;
     Random random = new Random();
     static ArrayList<ArrayList<Field>> pond_array;
     private static ArrayList<Agent> agents = new ArrayList<>();
     public static ArrayList<Agent> get_agents(){
         return agents;
     }
-    public static ArrayList<Agent> set_agents(int index) {
-        agents.remove(index);
-        return agents;
+    public static void set_agents(int index) {
+        agents.get(index).alive=false;
     }
 
     void create_pond_array2D(int x, int y) {
@@ -50,13 +49,7 @@ public class Pond {
             agent.position_x=x;
             agent.position_y=y;
             if (agent instanceof Frog){
-                if (((Frog) agent).growth_stage== Frog.Growth_stage.FROGSPAWN) {
-                    Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FROGSPAWN);
-                }else if (((Frog) agent).growth_stage== Frog.Growth_stage.TADPOLE){
-                    Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.TADPOLE);
-                }else {
-                    Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FROG);
-                }
+                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FROGSPAWN);
             }else if (agent instanceof Fish){
                 Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FISH);
             }
@@ -67,9 +60,14 @@ public class Pond {
         Iterator<Agent> iterator = agents.iterator();
         while (iterator.hasNext()){
             Agent agent=iterator.next();
-            if (!agent.alive){
+            if (agent.alive==false){
+                if (agent instanceof Frog){
+                    Simulation.set_amount_frogs();
+                }else {
+                    Simulation.set_amount_fish();
+                }
                 iterator.remove();
-                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.EMPTY);
+//                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.EMPTY);
             }
         }
     }

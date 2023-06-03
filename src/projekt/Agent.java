@@ -6,10 +6,11 @@ abstract public class Agent {
     boolean alive = true;
     int position_x;
     int position_y;
-    int hunger;
+    int hunger=0;
 
     void die(){
         alive = false;
+        Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.EMPTY);
     }
 
     boolean contains(int x, int y){
@@ -17,4 +18,6 @@ abstract public class Agent {
         else return true;
     }
     abstract void update();
+    abstract void move();
+    abstract void eat(Field eaten_field, int x, int y);
 }
