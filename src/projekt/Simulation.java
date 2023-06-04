@@ -33,7 +33,7 @@ public class Simulation {
         pond = new Pond(size_x, size_y, amount_fish, amount_frogs, amount_plankton);
         view = new View(size_x*40,size_y*40);
     }
-    void update_pond() {
+    void update_pond() {//metoda akttualizuje stan planszy
         for (Agent agent: Pond.get_agents()){
             if (agent.alive=true) agent.update();
         }
@@ -59,7 +59,7 @@ public class Simulation {
             System.out.println("Liczba ryb: " + amount_fish);
             System.out.println("Liczba planktonu: " + amount_plankton);
             view.getContentPane().removeAll();
-            view.update_view(/*pond*/);
+            view.update_view(pond);
             view.revalidate();
             view.repaint();
         } while (x < 12);

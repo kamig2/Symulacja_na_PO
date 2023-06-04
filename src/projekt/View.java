@@ -45,11 +45,11 @@ public class View extends JFrame {
             }
         }
     }
-    public void update_view(/*Pond pond*/) {
+    public void update_view(Pond pond) {
         //getContentPane().removeAll();
-        for (int i = 0; i < Pond.size_y; i++) {
-            for (int j = 0; j < Pond.size_x; j++) {
-                Field field = Pond.pond_array.get(i).get(j);
+        for (int i = 0; i < pond.size_y; i++) {
+            for (int j = 0; j < pond.size_x; j++) {
+                Field field = pond.pond_array.get(i).get(j);
 
                 if (field.get_has_fish()) {
                     draw_agent("FISH.png", j, i, 40, 40);

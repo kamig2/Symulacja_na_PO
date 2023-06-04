@@ -2,7 +2,9 @@ package projekt;
 public class Fish extends Agent{
     @Override
     void eat(Field eaten_field, int x,int y){
-        if (eaten_field.get_has_tadpole())hunger-=50;
+        System.out.println("ryba je kijanke");
+        hunger-=50;
+        Simulation.set_amount_frogs();
         for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
             if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
                 Pond.set_agents(Pond.get_agents().indexOf(agent));
@@ -22,8 +24,8 @@ public class Fish extends Agent{
                 if (sign==0) x = position_x + random.nextInt(2);
                 else x = position_x - random.nextInt(2);
                 sign=random.nextInt(2);
-                if (sign==0) y = position_y+random.nextInt(2);
-                else y = position_y - random.nextInt(2);
+                if (sign==0) y = position_y + random.nextInt(2);
+                else y = position_y-random.nextInt(2);
             }while (!contains(x,y));
         }while ((x==position_x && y==position_y )|| Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn());
         if (Pond.pond_array.get(y).get(x).get_has_tadpole()) eat(Pond.pond_array.get(y).get(x),x,y);

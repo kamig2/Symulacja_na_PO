@@ -11,6 +11,7 @@ abstract public class Agent {
     void die(){
         alive = false;
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.EMPTY);
+        System.out.println("umiera");
     }
 
     boolean contains(int x, int y){

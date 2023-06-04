@@ -7,8 +7,8 @@ public class Pond {
     static int size_x;
     static int size_y;
     Random random = new Random();
-    static ArrayList<ArrayList<Field>> pond_array;
-    private static ArrayList<Agent> agents = new ArrayList<>();
+    static ArrayList<ArrayList<Field>> pond_array;//dwuwymiarowa lista przechowujca pole
+    private static ArrayList<Agent> agents = new ArrayList<>();//lista agentów
     public static ArrayList<Agent> get_agents(){
         return agents;
     }
@@ -16,56 +16,58 @@ public class Pond {
         agents.get(index).alive=false;
     }
 
-    void create_pond_array2D(int x, int y) {
+    void create_pond_array2D(int x, int y) {//metoda tworząca listę dwuwymiarową reprezentującą staw
         pond_array = new ArrayList<>(x);
         for (int row = 0; row < size_y; row++) {
             ArrayList<Field> array_row = new ArrayList<>(y);
             for (int col = 0; col < size_x; col++) {
-                Field field = new Field(Field_type.EMPTY);
+                Field field = new Field(Field_type.EMPTY);//dodawanie pustych pól
                 array_row.add(field);
             }
             pond_array.add(array_row);
         }
     }
 
-    void create_agents_array(int amount_fish,int amount_frogs) {
+    void create_agents_array(int amount_fish,int amount_frogs) {//metoda tworząca liste Agentów
         for (int i=0;i<amount_fish;i++) {
-            Fish fish = new Fish();
+            Fish fish = new Fish();//dodawanie ryb do listy
             agents.add(fish);
         }
         for (int i=0;i<amount_frogs;i++) {
-            Frog frog = new Frog();
+            Frog frog = new Frog();//dodawanie żab do listy
             agents.add(frog);
         }
     }
 
-    public void place_agent(){
+    public void place_agent(){//metoda rozmieszczająca agentów na randomowe pozycje na planszy
         int x,y;
         for (Agent agent:agents){
             do {
-                x = random.nextInt(size_x);
-                y = random.nextInt(size_y);
-            }while (!(Pond.pond_array.get(y).get(x).get_is_empty()));
-            agent.position_x=x;
+                x = random.nextInt(size_x);//losowanie pozycji x
+                y = random.nextInt(size_y);//losowanie pozycji y
+            }while (!(Pond.pond_array.get(y).get(x).get_is_empty()));//sprawdzanie pole o wylosowanych wartościach x i y jest puste
+            agent.position_x=x;//przypisanie agentowi wylosowanej pozycji
             agent.position_y=y;
             if (agent instanceof Frog){
-                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FROGSPAWN);
+                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FROGSPAWN);//zmiana typu pola na skrzek
             }else if (agent instanceof Fish){
-                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FISH);
+                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FISH);//zmiana typu pola na ryba
             }
 
         }
     }
-    static void delete_agent(){
+    static void delete_agent(){//usuwanie nieżywych agentów z listy
         Iterator<Agent> iterator = agents.iterator();
         while (iterator.hasNext()){
             Agent agent=iterator.next();
-            if (agent.alive==false){
-                if (agent instanceof Frog){
-                    Simulation.set_amount_frogs();
-                }else {
-                    Simulation.set_amount_fish();
-                }
+            if (agent.alive==false){//sprawdznie czy agent żyje
+                if (agent instanceof Fish){//sprawdzanie czy agent jest rybą
+                    Simulation.set_amount_fish();//zmniejszanie liczby ryb o jeden
+                    System.out.println("zmniejszanie liczby ryb");
+                }/*else {
+                    Simulation.set_amount_frogs();//zmiejszaznie liczby żab o jeden
+                    System.out.println("zmniejsznie liczby żab");
+                }*/
                 iterator.remove();
 //                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.EMPTY);
             }
