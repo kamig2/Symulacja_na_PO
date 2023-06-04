@@ -28,7 +28,9 @@ public class Fish extends Agent{
                 else y = position_y-random.nextInt(2);
             }while (!contains(x,y));
         }while ((x==position_x && y==position_y )|| Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn());
-        if (Pond.pond_array.get(y).get(x).get_has_tadpole()) eat(Pond.pond_array.get(y).get(x),x,y);
+        if (Pond.pond_array.get(y).get(x).get_has_tadpole()||Pond.pond_array.get(y).get(x).get_has_frogspawn()) { // zmienilam zeby ryba mogla tez zjesc skrzek
+            eat(Pond.pond_array.get(y).get(x),x,y);
+        }
         position_x=x;
         position_y=y;
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.FISH);
@@ -36,12 +38,10 @@ public class Fish extends Agent{
     }
     @Override
     void update(){
-        //View view = new View(Simulation.getSize_x(),Simulation.getSize_y());
-        hunger+=10;
+        hunger+=5;
         if(hunger==100) {
             die();
         }
-        if (alive==true)move();
-        //view.repaint();
+        if (alive)move();
     }
 }

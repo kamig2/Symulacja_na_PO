@@ -8,14 +8,9 @@ public class Pond {
     static int size_y;
     Random random = new Random();
     static ArrayList<ArrayList<Field>> pond_array;//dwuwymiarowa lista przechowujca pole
-    private static ArrayList<Agent> agents = new ArrayList<>();//lista agentów
-    public static ArrayList<Agent> get_agents(){
-        return agents;
-    }
-    public static void set_agents(int index) {
-        agents.get(index).alive=false;
-    }
-
+    private static final ArrayList<Agent> agents = new ArrayList<>();//lista agentów
+    public static ArrayList<Agent> get_agents(){return agents;}
+    public static void set_agents(int index) {agents.get(index).alive=false;}
     void create_pond_array2D(int x, int y) {//metoda tworząca listę dwuwymiarową reprezentującą staw
         pond_array = new ArrayList<>(x);
         for (int row = 0; row < size_y; row++) {
@@ -27,7 +22,6 @@ public class Pond {
             pond_array.add(array_row);
         }
     }
-
     void create_agents_array(int amount_fish,int amount_frogs) {//metoda tworząca liste Agentów
         for (int i=0;i<amount_fish;i++) {
             Fish fish = new Fish();//dodawanie ryb do listy
@@ -38,7 +32,6 @@ public class Pond {
             agents.add(frog);
         }
     }
-
     public void place_agent(){//metoda rozmieszczająca agentów na randomowe pozycje na planszy
         int x,y;
         for (Agent agent:agents){
@@ -53,14 +46,13 @@ public class Pond {
             }else if (agent instanceof Fish){
                 Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.FISH);//zmiana typu pola na ryba
             }
-
         }
     }
     static void delete_agent(){//usuwanie nieżywych agentów z listy
         Iterator<Agent> iterator = agents.iterator();
         while (iterator.hasNext()){
             Agent agent=iterator.next();
-            if (agent.alive==false){//sprawdznie czy agent żyje
+            if (!agent.alive){//sprawdznie czy agent żyje
                 if (agent instanceof Fish){//sprawdzanie czy agent jest rybą
                     Simulation.set_amount_fish();//zmniejszanie liczby ryb o jeden
                     System.out.println("zmniejszanie liczby ryb");

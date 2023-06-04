@@ -32,43 +32,11 @@ public class Frog extends Agent  {
         else if (eaten_field.get_has_plankton()) {//sprawdzanie czy na jedzonym polu jest plankton
             hunger -= 50;
             System.out.println("kijanka je plankton");
-            //respawn_plankton();
+            Simulation.set_amount_plankton();
         }
         if (hunger<0) hunger =0;//ustawienie wartości głodu na 0 gdy jest liczbą ujemną
 
     }
-
-    /*private void move(){
-        if (growth_stage!=Growth_stage.TADPOLE) return;
-        int x,y,sign,x1,y1;
-        x1=position_x;
-        y1=position_y;
-        do {
-            do {
-                sign=random.nextInt(2);
-                if (sign==0) {
-                    x = position_x ++;
-                }else {
-                    x = position_x --;
-                }
-                sign=random.nextInt(2);
-                if (sign==0){
-
-                    y = position_y++;
-                }else {
-                    y = position_y --;
-                }
-            }while (!contains(x,y));//a ten warunek dałam żeby był wczesniej sprawdzony żeby przypadkiem nie podać do tablicy ujemnego indexu
-        } while (Pond.pond_array.get(position_y).get(position_x).get_has_fish()  || (x==position_x && y==position_y) || Pond.pond_array.get(position_y).get(position_x).get_has_frogspawn());//dodałam warunek żeby kijanka nie mogła wejść na to samo pole co skrzek
-        if (Pond.pond_array.get(y).get(x).get_has_plankton() || Pond.pond_array.get(y).get(x).get_has_tadpole()){ //edytowane
-            eat(Pond.pond_array.get(y).get(x));
-        }
-        position_y=y;
-        position_x=x;
-        Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.TADPOLE);
-        Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
-
-*/
     @Override
     void move() {//metoda poruszania po planszy
         if (growth_stage != Growth_stage.TADPOLE) return;//jeżeli stadium wzrostu żaby nie jest kijanka żaba nie może się poruszać
@@ -101,20 +69,16 @@ public class Frog extends Agent  {
     }
     @Override
     void update() {//zaktualizowanie wieku,głodu,pozycji,stadium wzrostu
-        //View view = new View(Simulation.getSize_x(),Simulation.getSize_y());
-        age += 20;
-        if (growth_stage == Growth_stage.TADPOLE) hunger += 40;
+        age += 10;
+        if (growth_stage == Growth_stage.TADPOLE) hunger += 5;
         if (hunger == 100 && growth_stage!=Growth_stage.FROG) {
             die();
             Simulation.set_amount_frogs();
         }
-
         if (age >= 50+ random.nextInt(40)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
             grow();
             age = 0;
         }
-        if (alive==true) move();
-
-        //view.repaint();
+        if (alive) move();
     }
 }
