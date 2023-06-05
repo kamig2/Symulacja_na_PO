@@ -13,6 +13,7 @@ public class Frog extends Agent  {
         }else if(growth_stage==Growth_stage.TADPOLE) {//sprawdzanie czy stadium wzrostu to kijanka
             growth_stage = Growth_stage.FROG;//zamiana stadium wzrostu na żaba
             Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.FROG);//zamiana typu pola na żaba
+            win=true;
         }
     }
     @Override
@@ -23,7 +24,6 @@ public class Frog extends Agent  {
             Simulation.set_amount_frogs();
             for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
                 if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
-                    System.out.println("kijanja zjada kijanke");
                     Pond.set_agents(Pond.get_agents().indexOf(agent));
                     break;
                 }
@@ -31,7 +31,6 @@ public class Frog extends Agent  {
         }
         else if (eaten_field.get_has_plankton()) {//sprawdzanie czy na jedzonym polu jest plankton
             hunger -= 50;
-            System.out.println("kijanka je plankton");
             Simulation.set_amount_plankton();
         }
         if (hunger<0) hunger =0;//ustawienie wartości głodu na 0 gdy jest liczbą ujemną
@@ -75,10 +74,10 @@ public class Frog extends Agent  {
             die();
             Simulation.set_amount_frogs();
         }
-        if (age >= 50+ random.nextInt(40)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
+        if (alive) move();
+        if (age >= 50+ random.nextInt(50)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
             grow();
             age = 0;
         }
-        if (alive) move();
     }
 }

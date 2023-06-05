@@ -6,7 +6,8 @@ import java.util.Random;
 public class Pond {
     static int size_x;
     static int size_y;
-    Random random = new Random();
+    static Random random = new Random();
+    static double plankton_growth = 0.05;
     static ArrayList<ArrayList<Field>> pond_array;//dwuwymiarowa lista przechowujca pole
     private static final ArrayList<Agent> agents = new ArrayList<>();//lista agentów
     public static ArrayList<Agent> get_agents(){return agents;}
@@ -55,7 +56,6 @@ public class Pond {
             if (!agent.alive){//sprawdznie czy agent żyje
                 if (agent instanceof Fish){//sprawdzanie czy agent jest rybą
                     Simulation.set_amount_fish();//zmniejszanie liczby ryb o jeden
-                    System.out.println("zmniejszanie liczby ryb");
                 }/*else {
                     Simulation.set_amount_frogs();//zmiejszaznie liczby żab o jeden
                     System.out.println("zmniejsznie liczby żab");
@@ -75,6 +75,19 @@ public class Pond {
             pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
         }
     }
+    //próbowałam zrobić metode respawn_plankton ale nie działa
+   /* static void respawn_plankton(int amount_plankton){ // funkcja odradzania się planktonu po zjedzeniu
+        int x,y;
+        while (amount_plankton!=(int)(size_x*size_y*plankton_growth)){//sprawdzanie czy aktualna liczba planktonu zgadza sie z tą ilością która ma być
+            do {
+                x = random.nextInt(Simulation.getSize_x());
+                y = random.nextInt(Simulation.getSize_y());
+            } while (!(Pond.pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsc
+            pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
+            System.out.println("planskton sie odradza");
+            Simulation.set_amount_plankton2();
+        }
+    }*/
     Pond(int x, int y, int amount_fish, int amount_frogspawn, int amount_plankton){ // konstruktor
         size_x = x;
         size_y = y;

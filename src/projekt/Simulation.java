@@ -1,13 +1,14 @@
 package projekt;
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Simulation {
     static final int TIME_STEP = 1000;
     static int size_x = 20;
     static int size_y = 20;
-    private static int amount_fish = 5;
-    private static int amount_frogs = 5;
-    private static int amount_plankton = 5;
+    private static int amount_fish = 20;
+    private static int amount_frogs = 15;
+    private static int amount_plankton =(int)(size_x*size_y*Pond.plankton_growth);
     private final View view;
 
     public static int set_amount_fish(){
@@ -18,6 +19,9 @@ public class Simulation {
     }
     public static int set_amount_plankton(){
         return amount_plankton--;
+    }
+    public static void set_amount_plankton2(){
+        amount_plankton++;
     }
     public static int getSize_x() {
         return size_x;
@@ -31,9 +35,10 @@ public class Simulation {
     }
     void update_pond() {//metoda akttualizuje stan planszy
         for (Agent agent: Pond.get_agents()){
-            if (agent.alive) agent.update();
+            if (agent.alive && !agent.win) agent.update();
         }
         Pond.delete_agent();
+//        Pond.respawn_plankton(amount_plankton);
     }
     private void updateView() { //działąjący update widoku
         view.getContentPane().removeAll();
@@ -42,6 +47,7 @@ public class Simulation {
         view.repaint();
     }
     void simulate() {
+        System.out.println(amount_plankton);
         System.out.println("Liczba żab   | Liczba ryb   |Liczba planktonu"  );
         int x = 0;
         do {
@@ -57,8 +63,17 @@ public class Simulation {
                 throw new RuntimeException(e);
             }
             x++;
-            System.out.println("     "+amount_frogs + "      |      "+amount_fish+"      |       "+amount_plankton);
+//            System.out.println("     "+amount_frogs + "      |      "+amount_fish+"      |       "+amount_plankton);
         } while (x < 30);
+        int ile=0;
+        for (ArrayList<Field> list :Pond.pond_array){//dodałam to chwilowo żeby sprawdzać czy liczb żab w pond_array zgadza się z liczbą żywych żab
+            for (Field field : list){
+                if (field.get_has_frog()){
+                    ile++;
+                }
+            }
+        }
+        System.out.println("ile:"+ile);
         System.out.println("Liczba wygranych żab: " + amount_frogs);
     }
     public static void main(String[] args) {

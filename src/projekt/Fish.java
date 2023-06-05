@@ -2,7 +2,6 @@ package projekt;
 public class Fish extends Agent{
     @Override
     void eat(Field eaten_field, int x,int y){
-        System.out.println("ryba je kijanke");
         hunger-=50;
         Simulation.set_amount_frogs();
         for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
@@ -27,7 +26,7 @@ public class Fish extends Agent{
                 if (sign==0) y = position_y + random.nextInt(2);
                 else y = position_y-random.nextInt(2);
             }while (!contains(x,y));
-        }while ((x==position_x && y==position_y )|| Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn());
+        }while ((x==position_x && y==position_y )|| Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn()||Pond.pond_array.get(y).get(x).get_has_frog());
         if (Pond.pond_array.get(y).get(x).get_has_tadpole()||Pond.pond_array.get(y).get(x).get_has_frogspawn()) { // zmienilam zeby ryba mogla tez zjesc skrzek
             eat(Pond.pond_array.get(y).get(x),x,y);
         }
