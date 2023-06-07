@@ -75,7 +75,7 @@ public class Frog extends Agent  {
             Simulation.set_amount_frogs();
         }
         if (alive) move();
-        if (age >= 50+ random.nextInt(50)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
+        if (age >= 50+ random.nextInt(60)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
             grow();
             age = 0;
         }

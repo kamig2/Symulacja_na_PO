@@ -7,7 +7,7 @@ public class Pond {
     static int size_x;
     static int size_y;
     static Random random = new Random();
-    static double plankton_growth = 0.05;
+    static double plankton_growth = 0.995;
     static ArrayList<ArrayList<Field>> pond_array;//dwuwymiarowa lista przechowujca pole
     private static final ArrayList<Agent> agents = new ArrayList<>();//lista agentów
     public static ArrayList<Agent> get_agents(){return agents;}
@@ -75,19 +75,27 @@ public class Pond {
             pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
         }
     }
-    //próbowałam zrobić metode respawn_plankton ale nie działa
-   /* static void respawn_plankton(int amount_plankton){ // funkcja odradzania się planktonu po zjedzeniu
+
+    //zrobiłam coś takiego możesz zobaczyć jak to działa ale według mnie tak dziwnie jak masz inny pomysł to spróbuj zrobić
+    //w ogóle chba będzie trzeba dodać jakiś warunek w metodzie move ryby bo przez to że sie ten plankton spawnuje to może wystąpić
+    //taki błąd że ryba nie będzie sie miała gdzie ruszyc bo będzie otoczona planktonem i przez to nie pójdzie symulacja dalej bo sie będzie losować
+    //ciągle nowa pozycja dla ryby a warunek nie puści dalej
+    static void respawn_plankton(){
+        double probability;
         int x,y;
-        while (amount_plankton!=(int)(size_x*size_y*plankton_growth)){//sprawdzanie czy aktualna liczba planktonu zgadza sie z tą ilością która ma być
-            do {
-                x = random.nextInt(Simulation.getSize_x());
-                y = random.nextInt(Simulation.getSize_y());
-            } while (!(Pond.pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsc
-            pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
-            System.out.println("planskton sie odradza");
-            Simulation.set_amount_plankton2();
+        for (ArrayList<Field> fields : pond_array ){
+            for (Field field : fields){
+                if (field.get_is_empty()){//sprawdzanie czy pole jest puste
+                    probability = random.nextDouble();//losowanie liczby rzeczywistej od 0 do 1
+                    if (probability>plankton_growth) {//jeżeli wylosowana liczba jest większa od ustalonego współczynnika to pole zmienia typ na plankton
+                        field.set_type(Field_type.PLANKTON);
+                        Simulation.set_amount_plankton2();//zwiększanie liczby planktonu
+                    }
+
+                }
+            }
         }
-    }*/
+    }
     Pond(int x, int y, int amount_fish, int amount_frogspawn, int amount_plankton){ // konstruktor
         size_x = x;
         size_y = y;

@@ -29,7 +29,7 @@ public class Fish extends Agent{
         }while ((x==position_x && y==position_y )|| !(Pond.pond_array.get(y).get(x).get_is_empty() || Pond.pond_array.get(y).get(x).get_has_tadpole()));
         if (Pond.pond_array.get(y).get(x).get_has_tadpole()/*||Pond.pond_array.get(y).get(x).get_has_frogspawn()*/) { // zmienilam zeby ryba mogla tez zjesc skrzek
             eat(Pond.pond_array.get(y).get(x),x,y);
-        }//Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn()||Pond.pond_array.get(y).get(x).get_has_frog()
+        }
         position_x=x;
         position_y=y;
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.FISH);

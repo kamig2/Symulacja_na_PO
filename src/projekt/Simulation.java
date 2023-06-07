@@ -7,8 +7,8 @@ public class Simulation {
     static int size_y = 20;
     private static int amount_fish = 10;
     private static int amount_frogs = 10;
-    private static int amount_plankton =(int)(size_x*size_y*Pond.plankton_growth);
-    static int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*60;//zrobiłam tak że to jest zależne od ilości wyswietlanych agentow na planszy bo im wiecej tym większy czas potrzebny
+    private static int amount_plankton = 20/*(int)(size_x*size_y*Pond.plankton_growth)*/;
+    static int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*65;//zrobiłam tak że to jest zależne od ilości wyswietlanych agentow na planszy bo im wiecej tym większy czas potrzebny
     private final View view;
 
     public static int set_amount_fish(){
@@ -48,7 +48,7 @@ public class Simulation {
             if (agent.alive && !agent.win) agent.update();
         }
         Pond.delete_agent();
-//        Pond.respawn_plankton(amount_plankton);
+        Pond.respawn_plankton();
     }
     private void updateView() { //działąjący update widoku
         view.getContentPane().removeAll();
@@ -66,7 +66,7 @@ public class Simulation {
             SwingUtilities.invokeLater(this::updateView); //dodany dobry update widoku
             long elapsed_time = System.currentTimeMillis() - start_time;
             long sleep_time = TIME_STEP - elapsed_time;
-            System.out.println(sleep_time);
+//            System.out.println("time sleep: "+ sleep_time);
             if (sleep_time < 0) sleep_time = 0;
             try {
                 Thread.sleep(sleep_time);
@@ -84,13 +84,14 @@ public class Simulation {
                     }
                 }
             }
-            System.out.println("ile r"+ryby);
-            System.out.println("ryby"+amount_fish);
-            System.out.println("ile"+ile);
-            System.out.println("zaby"+amount_frogs);
+            /*System.out.println("ile ryb na planszy "+ryby);
+            System.out.println("ryby policzone "+amount_fish);*/
+            System.out.println("ile żab na planszy "+ile);
+            System.out.println("zaby "+amount_frogs);
             x++;
+
 //            System.out.println("     "+amount_frogs + "      |      "+amount_fish+"      |       "+amount_plankton);
-        } while (amount_fish>0);//warunek działania symulacji narazie talki ale trzeba pomyśleć nad innym
+        } while (amount_fish>0);//tzreba dodac że stadium wzrostu wszystkich żab musi być żaba
         int ile=0;
         for (ArrayList<Field> list :Pond.pond_array){//dodałam to chwilowo żeby sprawdzać czy liczb żab w pond_array zgadza się z liczbą żywych żab
             for (Field field : list){
