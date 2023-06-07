@@ -1,7 +1,7 @@
 package projekt;
 public class Fish extends Agent{
     @Override
-    void eat(Field eaten_field, int x,int y){
+    protected void eat(Field eaten_field, int x,int y){
         hunger-=50;
         Simulation.set_amount_frogs();
         for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
@@ -13,7 +13,7 @@ public class Fish extends Agent{
         if (hunger<0) hunger =0;
     }
     @Override
-    void move(){
+    protected void move(){
         int x,y,x1,y1,sign;
         y1=position_y;
         x1=position_x;
@@ -26,17 +26,17 @@ public class Fish extends Agent{
                 if (sign==0) y = position_y + random.nextInt(2);
                 else y = position_y-random.nextInt(2);
             }while (!contains(x,y));
-        }while ((x==position_x && y==position_y )|| Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn()||Pond.pond_array.get(y).get(x).get_has_frog());
-        if (Pond.pond_array.get(y).get(x).get_has_tadpole()||Pond.pond_array.get(y).get(x).get_has_frogspawn()) { // zmienilam zeby ryba mogla tez zjesc skrzek
+        }while ((x==position_x && y==position_y )|| !(Pond.pond_array.get(y).get(x).get_is_empty() || Pond.pond_array.get(y).get(x).get_has_tadpole()));
+        if (Pond.pond_array.get(y).get(x).get_has_tadpole()/*||Pond.pond_array.get(y).get(x).get_has_frogspawn()*/) { // zmienilam zeby ryba mogla tez zjesc skrzek
             eat(Pond.pond_array.get(y).get(x),x,y);
-        }
+        }//Pond.pond_array.get(y).get(x).get_has_fish()|| Pond.pond_array.get(y).get(x).get_has_plankton()||Pond.pond_array.get(y).get(x).get_has_frogspawn()||Pond.pond_array.get(y).get(x).get_has_frog()
         position_x=x;
         position_y=y;
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.FISH);
         Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);
     }
     @Override
-    void update(){
+    protected void update(){
         hunger+=5;
         if(hunger==100) {
             die();

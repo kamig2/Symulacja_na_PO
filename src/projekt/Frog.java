@@ -3,7 +3,7 @@ package projekt;
 public class Frog extends Agent  {
 
     private int age=0;
-    enum Growth_stage{FROGSPAWN, TADPOLE, FROG}
+    private enum Growth_stage{FROGSPAWN, TADPOLE, FROG}
     Growth_stage growth_stage = Growth_stage.FROGSPAWN;
     private void grow(){//metoda wzrostu żaby w kolejne stadium wzrostu
         if(growth_stage==Growth_stage.FROGSPAWN) {//sprawdzanie czy stadium wzrostu to skrzek
@@ -37,7 +37,7 @@ public class Frog extends Agent  {
 
     }
     @Override
-    void move() {//metoda poruszania po planszy
+    protected void move() {//metoda poruszania po planszy
         if (growth_stage != Growth_stage.TADPOLE) return;//jeżeli stadium wzrostu żaby nie jest kijanka żaba nie może się poruszać
         int x, y, sign, x1, y1;
         x1 = position_x;
@@ -67,9 +67,9 @@ public class Frog extends Agent  {
         Pond.pond_array.get(y1).get(x1).set_type(Field_type.EMPTY);//zmiana typu pola starej pozycji na pusty
     }
     @Override
-    void update() {//zaktualizowanie wieku,głodu,pozycji,stadium wzrostu
+    protected void update() {//zaktualizowanie wieku,głodu,pozycji,stadium wzrostu
         age += 10;
-        if (growth_stage == Growth_stage.TADPOLE) hunger += 5;
+        if (growth_stage == Growth_stage.TADPOLE) hunger += 10;
         if (hunger == 100 && growth_stage!=Growth_stage.FROG) {
             die();
             Simulation.set_amount_frogs();
