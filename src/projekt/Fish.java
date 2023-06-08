@@ -4,6 +4,7 @@ public class Fish extends Agent{
     protected void eat(Field eaten_field, int x,int y){
         hunger-=50;
         Simulation.set_amount_frogs();
+        System.out.println("ryba je kijanke");
         for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
             if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
                 Pond.set_agents(Pond.get_agents().indexOf(agent));
@@ -39,6 +40,7 @@ public class Fish extends Agent{
     protected void update(){
         hunger+=5;
         if(hunger==100) {
+            System.out.println("ryba umiera");
             die();
         }
         if (alive)move();

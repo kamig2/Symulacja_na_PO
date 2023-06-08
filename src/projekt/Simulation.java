@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Simulation {
     static int size_x = 20;
     static int size_y = 20;
-    private static int amount_fish = 10;
+    private static int amount_fish = 15;
     private static int amount_frogs = 10;
-    private static int amount_plankton = 20/*(int)(size_x*size_y*Pond.plankton_growth)*/;
+    private static int amount_plankton = 10/*(int)(size_x*size_y*Pond.plankton_growth)*/;
     static int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*65;//zrobiłam tak że to jest zależne od ilości wyswietlanych agentow na planszy bo im wiecej tym większy czas potrzebny
     private final View view;
 
@@ -31,7 +31,7 @@ public class Simulation {
     }
     public Simulation(){
         Pond pond = new Pond(size_x, size_y, amount_fish, amount_frogs, amount_plankton);
-        view = new View(size_x*41,size_y*40);
+        view = new View(size_x*41,size_y*42);
         long start_time = System.currentTimeMillis();
         SwingUtilities.invokeLater(this::updateView);
         long elapsed_time = System.currentTimeMillis() - start_time;
@@ -88,8 +88,8 @@ public class Simulation {
             System.out.println("ryby policzone "+amount_fish);*/
             System.out.println("ile żab na planszy "+ile);
             System.out.println("zaby "+amount_frogs);
+            System.out.println("plankton:"+amount_plankton);
             x++;
-
 //            System.out.println("     "+amount_frogs + "      |      "+amount_fish+"      |       "+amount_plankton);
         } while (amount_fish>0);//tzreba dodac że stadium wzrostu wszystkich żab musi być żaba
         int ile=0;

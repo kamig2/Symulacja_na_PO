@@ -20,6 +20,7 @@ public class Frog extends Agent  {
     protected void eat(Field eaten_field, int x, int y){//metoda jedzenia
         if (growth_stage != Growth_stage.TADPOLE) return;
         if (eaten_field.get_has_tadpole()){//sprawdzanie czy na jedzonym polu znajduje się kijanka
+            System.out.println("kijanka je kijanke");
             hunger=0;
             Simulation.set_amount_frogs();
             for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
@@ -32,6 +33,7 @@ public class Frog extends Agent  {
         else if (eaten_field.get_has_plankton()) {//sprawdzanie czy na jedzonym polu jest plankton
             hunger -= 50;
             Simulation.set_amount_plankton();
+            System.out.println("kijanka je plankton");
         }
         if (hunger<0) hunger =0;//ustawienie wartości głodu na 0 gdy jest liczbą ujemną
 
@@ -71,11 +73,12 @@ public class Frog extends Agent  {
         age += 10;
         if (growth_stage == Growth_stage.TADPOLE) hunger += 10;
         if (hunger == 100 && growth_stage!=Growth_stage.FROG) {
-            die();
+            System.out.println("żaba umiera");
             Simulation.set_amount_frogs();
+            die();
         }
         if (alive) move();
-        if (age >= 50+ random.nextInt(60)) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
+        if (age >= 50+ random.nextInt(60) && alive) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
             grow();
             age = 0;
         }
