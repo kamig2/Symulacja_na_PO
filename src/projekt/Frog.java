@@ -22,7 +22,7 @@ public class Frog extends Agent  {
         if (eaten_field.get_has_tadpole()){//sprawdzanie czy na jedzonym polu znajduje się kijanka
             System.out.println("kijanka je kijanke");
             hunger=0;
-            Simulation.set_amount_frogs();
+//            Simulation.set_amount_frogs();
             for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
                 if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
                     Pond.set_agents(Pond.get_agents().indexOf(agent));
@@ -32,7 +32,7 @@ public class Frog extends Agent  {
         }
         else if (eaten_field.get_has_plankton()) {//sprawdzanie czy na jedzonym polu jest plankton
             hunger -= 50;
-            Simulation.set_amount_plankton();
+            Simulation.set_amount_plankton();//zmniejszanie ilości planktonu o 1
             System.out.println("kijanka je plankton");
         }
         if (hunger<0) hunger =0;//ustawienie wartości głodu na 0 gdy jest liczbą ujemną
@@ -42,7 +42,7 @@ public class Frog extends Agent  {
     protected void move() {//metoda poruszania po planszy
         if (growth_stage != Growth_stage.TADPOLE) return;//jeżeli stadium wzrostu żaby nie jest kijanka żaba nie może się poruszać
         int x, y, sign, x1, y1;
-        x1 = position_x;
+        x1 = position_x;//zmienne przechowujące poprzednią pozycje żaby
         y1 = position_y;
         do {
             do {
@@ -58,7 +58,7 @@ public class Frog extends Agent  {
                 } else {
                     y = position_y - random.nextInt(2);
                 }
-            } while (!contains(x, y));//sprawdznie czy wylosowane pozycje x i y nie są liczbami ujemnymi
+            } while (!contains(x, y));//sprawdznie czy wylosowane pozycje x i y są liczbami ujemnymi
         } while (Pond.pond_array.get(y).get(x).get_has_fish() || (x == position_x && y == position_y) || Pond.pond_array.get(y).get(x).get_has_frogspawn());//sprawdznie czy na wylosowanej pozycji nie znajduje się ryba lub skrzek oraz sprawdznie czy nowa pozycja niejest równa starej
         if (Pond.pond_array.get(y).get(x).get_has_plankton() || Pond.pond_array.get(y).get(x).get_has_tadpole()) { //sprawdznie czy na wylosowanej pozycji jest plankton lub kijanka
             eat(Pond.pond_array.get(y).get(x), x, y);//zjadanie
@@ -70,16 +70,16 @@ public class Frog extends Agent  {
     }
     @Override
     protected void update() {//zaktualizowanie wieku,głodu,pozycji,stadium wzrostu
-        age += 10;
-        if (growth_stage == Growth_stage.TADPOLE) hunger += 10;
+        age += 10;//zwiększenie wieku
+        if (growth_stage == Growth_stage.TADPOLE) hunger += 10;//zwiększanie głodu
         if (hunger == 100 && growth_stage!=Growth_stage.FROG) {
             System.out.println("żaba umiera");
-            Simulation.set_amount_frogs();
+//            Simulation.set_amount_frogs();
             die();
         }
-        if (alive) move();
-        if (age >= 50+ random.nextInt(60) && alive) {//dodałam randomową liczbe żeby nie wszystko sie zamieniało w tym samym czasie
-            grow();
+        if (alive) move();//poruszanie kijanki jeśli żyje
+        if (age >= 50+ random.nextInt(60) && alive) {
+            grow();//zmiana stadium wzrostu żaby
             age = 0;
         }
     }

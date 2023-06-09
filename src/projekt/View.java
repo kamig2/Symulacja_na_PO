@@ -47,8 +47,8 @@ public class View extends JFrame {
     }
     public void update_view() {
         getContentPane().removeAll();
-        for (int i = 0; i < Pond.size_y; i++) {
-            for (int j = 0; j < Pond.size_x; j++) {
+        for (int i = 0; i < Simulation.get_size_y(); i++) {
+            for (int j = 0; j < Simulation.get_size_x(); j++) {
                 Field field = Pond.pond_array.get(i).get(j);
                 if (field.get_has_fish()) {
                     remove_agent(j, i);

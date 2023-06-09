@@ -4,26 +4,26 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Pond {
-    static int size_x;
-    static int size_y;
-    static Random random = new Random();
-    static double plankton_growth = 0.995;
+    /*private static int size_x;
+    private static int size_y;*/
+    private static Random random = new Random();
+    private static double plankton_growth = 0.995;
     static ArrayList<ArrayList<Field>> pond_array;//dwuwymiarowa lista przechowujca pole
-    private static final ArrayList<Agent> agents = new ArrayList<>();//lista agentów
+    private static ArrayList<Agent> agents = new ArrayList<>();//lista agentów
     public static ArrayList<Agent> get_agents(){return agents;}
     public static void set_agents(int index) {agents.get(index).alive=false;}
-    void create_pond_array2D(int x, int y) {//metoda tworząca listę dwuwymiarową reprezentującą staw
+    private void create_pond_array2D(int x, int y) {//metoda tworząca listę dwuwymiarową reprezentującą staw
         pond_array = new ArrayList<>(x);
-        for (int row = 0; row < size_y; row++) {
+        for (int row = 0; row < Simulation.get_size_y(); row++) {
             ArrayList<Field> array_row = new ArrayList<>(y);
-            for (int col = 0; col < size_x; col++) {
+            for (int col = 0; col < Simulation.get_size_x(); col++) {
                 Field field = new Field(Field_type.EMPTY);//dodawanie pustych pól
                 array_row.add(field);
             }
             pond_array.add(array_row);
         }
     }
-    void create_agents_array(int amount_fish,int amount_frogs) {//metoda tworząca liste Agentów
+    private void create_agents_array(int amount_fish,int amount_frogs) {//metoda tworząca liste Agentów
         for (int i=0;i<amount_fish;i++) {
             Fish fish = new Fish();//dodawanie ryb do listy
             agents.add(fish);
@@ -33,12 +33,12 @@ public class Pond {
             agents.add(frog);
         }
     }
-    public void place_agent(){//metoda rozmieszczająca agentów na randomowe pozycje na planszy
+    private void place_agent(){//metoda rozmieszczająca agentów na randomowe pozycje na planszy
         int x,y;
         for (Agent agent:agents){
             do {
-                x = random.nextInt(size_x);//losowanie pozycji x
-                y = random.nextInt(size_y);//losowanie pozycji y
+                x = random.nextInt(Simulation.get_size_x());//losowanie pozycji x
+                y = random.nextInt(Simulation.get_size_y());//losowanie pozycji y
             }while (!(Pond.pond_array.get(y).get(x).get_is_empty()));//sprawdzanie pole o wylosowanych wartościach x i y jest puste
             agent.position_x=x;//przypisanie agentowi wylosowanej pozycji
             agent.position_y=y;
@@ -49,28 +49,26 @@ public class Pond {
             }
         }
     }
-    static void delete_agent(){//usuwanie nieżywych agentów z listy
+    public static void delete_agent(){//usuwanie nieżywych agentów z listy
         Iterator<Agent> iterator = agents.iterator();
         while (iterator.hasNext()){
             Agent agent=iterator.next();
             if (!agent.alive){//sprawdznie czy agent żyje
-                if (agent instanceof Fish){//sprawdzanie czy agent jest rybą
+                if (agent instanceof Fish) {//sprawdzanie czy agent jest rybą
                     Simulation.set_amount_fish();//zmniejszanie liczby ryb o jeden
-                }/*else {
-                    Simulation.set_amount_frogs();//zmiejszaznie liczby żab o jeden
-                    System.out.println("zmniejsznie liczby żab");
-                }*/
+                }else {
+                    Simulation.set_amount_frogs();//zmniejszanie liczby żab
+                }
                 iterator.remove();
-//                Pond.pond_array.get(agent.position_y).get(agent.position_x).set_type(Field_type.EMPTY);
             }
         }
     }
-    void place_plankton(int amount_plankton) {
+    private void place_plankton(int amount_plankton) {
         int x, y;
         for (int i = 0; i < amount_plankton; i++) {
             do {
-                x = random.nextInt(size_x);
-                y = random.nextInt(size_y);
+                x = random.nextInt(Simulation.get_size_x());
+                y = random.nextInt(Simulation.get_size_y());
             } while (!(pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
             pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
         }
@@ -80,7 +78,7 @@ public class Pond {
     //w ogóle chba będzie trzeba dodać jakiś warunek w metodzie move ryby bo przez to że sie ten plankton spawnuje to może wystąpić
     //taki błąd że ryba nie będzie sie miała gdzie ruszyc bo będzie otoczona planktonem i przez to nie pójdzie symulacja dalej bo sie będzie losować
     //ciągle nowa pozycja dla ryby a warunek nie puści dalej
-    static void respawn_plankton(){
+    public static void respawn_plankton(){
         double probability;
         int x,y;
         for (ArrayList<Field> fields : pond_array ){
@@ -97,9 +95,9 @@ public class Pond {
         }
     }
     Pond(int x, int y, int amount_fish, int amount_frogspawn, int amount_plankton){ // konstruktor
-        size_x = x;
-        size_y = y;
-        create_pond_array2D(size_x, size_y);
+        /*size_x = x;
+        size_y = y;*/
+        create_pond_array2D(x, y);
         create_agents_array(amount_fish,amount_frogspawn);
         place_agent();
         place_plankton(amount_plankton);
