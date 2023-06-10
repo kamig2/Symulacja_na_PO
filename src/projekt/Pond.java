@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Pond {
     private static Random random = new Random();
-    private static double plankton_growth = 0.999;
+    private static double plankton_growth = 0.998;
     static ArrayList<ArrayList<Field>> pond_array;//dwuwymiarowa lista przechowujca pole
     private static ArrayList<Agent> agents = new ArrayList<>();//lista agentów
     public static ArrayList<Agent> get_agents(){return agents;}

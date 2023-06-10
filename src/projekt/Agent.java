@@ -11,9 +11,6 @@ abstract public class Agent {
     protected void die(){
         alive = false;
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.EMPTY);
-        System.out.println("zmienianie typu pola umarłego agenta na empty");
-        System.out.println("pozycja x: " + position_x);
-        System.out.println("Pozycja y: "+ position_y);
     }
     protected boolean contains(int x, int y){
         if(x<0 || x>= Simulation.getSize_x() || y<0 || y>= Simulation.getSize_y()) return false;

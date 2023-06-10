@@ -7,7 +7,7 @@ public class Simulation {
     private static Random random = new Random();
     private static int size_x = 19; // rozmiar planszy
     private static int size_y = 19; // rozmiar planszy
-    private static int amount_fish = 85; //początkowa liczba ryb
+    private static int amount_fish = 60; //początkowa liczba ryb
     private static int amount_frogs = 10; //początkowa liczba żab
     private static int amount_plankton = 10; //początkowa liczba planktonu
     private static int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*65;
@@ -65,7 +65,6 @@ public class Simulation {
         view.repaint();
     }
     private void simulate() {
-        System.out.println(amount_plankton);
         System.out.println("Liczba żab   | Liczba ryb   |Liczba planktonu"  );
         int x = 0;
         int amount_adult_frogs=0;
@@ -75,7 +74,6 @@ public class Simulation {
             SwingUtilities.invokeLater(this::updateView); //dodany dobry update widoku
             long elapsed_time = System.currentTimeMillis() - start_time;
             long sleep_time = TIME_STEP - elapsed_time;
-//            System.out.println("time sleep: "+ sleep_time);
             if (sleep_time < 0) sleep_time = 0;
             try {
                 Thread.sleep(sleep_time);
