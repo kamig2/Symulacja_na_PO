@@ -5,12 +5,12 @@ import java.util.Random;
 
 public class Simulation {
     private static Random random = new Random();
-    private static int size_x = 19;
-    private static int size_y = 19;
-    private static int amount_fish = 10;
-    private static int amount_frogs = 10;
-    private static int amount_plankton = 10;
-    private static int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*65;//zrobiłam tak że to jest zależne od ilości wyswietlanych agentow na planszy bo im wiecej tym większy czas potrzebny
+    private static int size_x = 19; // rozmiar planszy
+    private static int size_y = 19; // rozmiar planszy
+    private static int amount_fish = 85; //początkowa liczba ryb
+    private static int amount_frogs = 10; //początkowa liczba żab
+    private static int amount_plankton = 10; //początkowa liczba planktonu
+    private static int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*65;
     private final View view;
     public static int get_size_x(){
         return size_x;
@@ -51,14 +51,14 @@ public class Simulation {
             throw new RuntimeException(e);
         }
     }
-    private void update_pond() {//metoda akttualizuje stan planszy
+    private void update_pond() {//metoda aktualizująca stan planszy
         for (Agent agent: Pond.get_agents()){
             if (agent.alive && !agent.win) agent.update();
         }
         Pond.delete_agent();
         Pond.respawn_plankton();
     }
-    private void updateView() { //działąjący update widoku
+    private void updateView() { //update widoku
         view.getContentPane().removeAll();
         view.update_view();
         view.revalidate();
@@ -101,23 +101,9 @@ public class Simulation {
                     }
                 }
             }
-            /*System.out.println("ile ryb na planszy "+ryby);
-            System.out.println("ryby policzone "+amount_fish);*/
-            System.out.println("ile żab na planszy "+ile);
-            System.out.println("zaby "+amount_frogs);
-            System.out.println("plankton:"+amount_plankton);
             x++;
-//            System.out.println("     "+amount_frogs + "      |      "+amount_fish+"      |       "+amount_plankton);
+            System.out.println("     "+amount_frogs + "      |      "+amount_fish+"      |       "+amount_plankton);
         } while (amount_fish>0 || amount_frogs!=amount_adult_frogs);//warunek działania symulacji liczba ryb większa od 0 lub nie wszystkie żywe żaby wyewoluowały
-        int ile=0;
-        for (ArrayList<Field> list :Pond.pond_array){//dodałam to chwilowo żeby sprawdzać czy liczb żab w pond_array zgadza się z liczbą żywych żab
-            for (Field field : list){
-                if (field.get_has_frog() || field.get_has_tadpole() || field.get_has_frogspawn()){
-                    ile++;
-                }
-            }
-        }
-        System.out.println("ile:"+ile);
         System.out.println("Liczba wygranych żab: " + amount_frogs);
     }
     public static void main(String[] args) {

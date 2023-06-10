@@ -6,18 +6,14 @@ public class Field {
     private boolean has_frogspawn=false;
     private boolean has_tadpole=false;
     private boolean has_frog = false;
-    private Field_type field_type;
+
     Field(Field_type type){
-        this.field_type=type;
         if (type==Field_type.EMPTY) is_empty=true;
         if (type==Field_type.FISH) has_fish=true;
         if (type==Field_type.FROGSPAWN) has_frogspawn=true;
         if (type==Field_type.PLANKTON) has_plankton = true;
         if (type==Field_type.TADPOLE) has_tadpole=true;
         if (type==Field_type.FROG) has_frog=true;
-    }
-    public Field_type getType(){
-        return field_type;
     }
     public boolean get_is_empty(){
         return is_empty;
@@ -36,7 +32,6 @@ public class Field {
     }
     public boolean get_has_frog(){return has_frog;}
     public void set_type(Field_type type){//zamiana typu pola
-        this.field_type=type;
         is_empty=false;
         has_fish=false;
         has_frogspawn=false;

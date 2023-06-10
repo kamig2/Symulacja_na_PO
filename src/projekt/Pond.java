@@ -4,10 +4,8 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Pond {
-    /*private static int size_x;
-    private static int size_y;*/
     private static Random random = new Random();
-    private static double plankton_growth = 0.995;
+    private static double plankton_growth = 0.999;
     static ArrayList<ArrayList<Field>> pond_array;//dwuwymiarowa lista przechowujca pole
     private static ArrayList<Agent> agents = new ArrayList<>();//lista agentów
     public static ArrayList<Agent> get_agents(){return agents;}
@@ -95,25 +93,12 @@ public class Pond {
         }
     }
     Pond(int x, int y, int amount_fish, int amount_frogspawn, int amount_plankton){ // konstruktor
-        /*size_x = x;
-        size_y = y;*/
         create_pond_array2D(x, y);
         create_agents_array(amount_fish,amount_frogspawn);
         place_agent();
         place_plankton(amount_plankton);
     }
-    /* void respawn_plankton(){ // funkcja odradzania się planktonu po zjedzeniu
-         int x,y;
-         do {
-             x = random.nextInt(Simulation.getSize_x());
-             y = random.nextInt(Simulation.getSize_y());
-         } while (!(Pond.pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsc
-         Field field = new Field("PLANKTON");
-         ArrayList<Field> array_row;
-         array_row = Pond.pond_array.get(y);
-         array_row.set(x,field);   //zamiena typu pola na PLANKTON
-         Pond.pond_array.set(y,array_row);
-     }*/
+
 }
 
 
