@@ -1,17 +1,6 @@
 package projekt;
 public class Fish extends Agent{
-    @Override/*
-    protected void eat(Field eaten_field, int x,int y){//metoda jedzenia
-        hunger-=50;//głód maleje o 50
-        System.out.println("ryba je kijanke");
-        for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
-            if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
-                Pond.set_agents(Pond.get_agents().indexOf(agent));
-                break;
-            }
-        }
-        if (hunger<0) hunger =0;//zmiana ujemnej wartości głodu na 0
-    }*/
+    @Override
     protected void eat(Field eaten_field, int x, int y){//metoda jedzenia
         if (eaten_field.get_has_tadpole()){//sprawdzanie czy na jedzonym polu znajduje się kijanka
             System.out.println("ryba je kijanke");

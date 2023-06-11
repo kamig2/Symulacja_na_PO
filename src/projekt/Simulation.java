@@ -31,12 +31,6 @@ public class Simulation {
     public static void set_amount_plankton2(){
         amount_plankton++;
     }
-    public static int getSize_x() {
-        return size_x;
-    }
-    public static int getSize_y() {
-        return size_y;
-    }
     public Simulation(){
         Pond pond = new Pond(size_x, size_y, amount_fish, amount_frogs, amount_plankton);
         view = new View(size_x*41,size_y*42);

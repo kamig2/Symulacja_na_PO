@@ -72,10 +72,6 @@ public class Pond {
         }
     }
 
-    //zrobiłam coś takiego możesz zobaczyć jak to działa ale według mnie tak dziwnie jak masz inny pomysł to spróbuj zrobić
-    //w ogóle chba będzie trzeba dodać jakiś warunek w metodzie move ryby bo przez to że sie ten plankton spawnuje to może wystąpić
-    //taki błąd że ryba nie będzie sie miała gdzie ruszyc bo będzie otoczona planktonem i przez to nie pójdzie symulacja dalej bo sie będzie losować
-    //ciągle nowa pozycja dla ryby a warunek nie puści dalej
     public static void respawn_plankton(){
         double probability;
         int x,y;

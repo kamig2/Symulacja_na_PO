@@ -13,7 +13,7 @@ abstract public class Agent {
         Pond.pond_array.get(position_y).get(position_x).set_type(Field_type.EMPTY);
     }
     protected boolean contains(int x, int y){
-        if(x<0 || x>= Simulation.getSize_x() || y<0 || y>= Simulation.getSize_y()) return false;
+        if(x<0 || x>= Simulation.get_size_x() || y<0 || y>= Simulation.get_size_y()) return false;
         else return true;
     }
     abstract void update();
