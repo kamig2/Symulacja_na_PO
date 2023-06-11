@@ -27,7 +27,7 @@ public class View extends JFrame {
         this.repaint(); // odświeża wygląd okna
         return label;
     }
-    public void remove_agent(int position_x, int position_y) { //poprawione
+    public void remove_agent(int position_x, int position_y) { //metoda usuwająca obrazka agenta
         Component[] components = this.getContentPane().getComponents();
         for (Component component : components) {
             if (component instanceof JLabel) {

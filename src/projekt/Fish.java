@@ -21,8 +21,8 @@ public class Fish extends Agent{
                     break;
                 }
             }
-            if (hunger < 0) hunger = 0;//ustawienie wartości głodu na 0 gdy jest liczbą ujemną
         }
+        if (hunger < 0) hunger = 0;//ustawienie wartości głodu na 0 gdy jest liczbą ujemną
     }
     @Override
     protected void move(){//metoda pruszania po planszy

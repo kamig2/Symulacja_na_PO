@@ -61,20 +61,19 @@ public class Pond {
             }
         }
     }
-    private void place_plankton(int amount_plankton) {
+    private void place_plankton(int amount_plankton) {//rozmieszcznie planktonu na planszy
         int x, y;
         for (int i = 0; i < amount_plankton; i++) {
             do {
-                x = random.nextInt(Simulation.get_size_x());
+                x = random.nextInt(Simulation.get_size_x());//losowanie pola
                 y = random.nextInt(Simulation.get_size_y());
             } while (!(pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
             pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
         }
     }
 
-    public static void respawn_plankton(){
+    public static void respawn_plankton(){//odradzanie planktonu
         double probability;
-        int x,y;
         for (ArrayList<Field> fields : pond_array ){
             for (Field field : fields){
                 if (field.get_is_empty()){//sprawdzanie czy pole jest puste
