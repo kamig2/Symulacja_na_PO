@@ -61,24 +61,19 @@ public class Pond {
             }
         }
     }
-    private void place_plankton(int amount_plankton) {
+    private void place_plankton(int amount_plankton) {//rozmieszcznie planktonu na planszy
         int x, y;
         for (int i = 0; i < amount_plankton; i++) {
             do {
-                x = random.nextInt(Simulation.get_size_x());
+                x = random.nextInt(Simulation.get_size_x());//losowanie pola
                 y = random.nextInt(Simulation.get_size_y());
             } while (!(pond_array.get(y).get(x).get_is_empty())); //Sprawdzanie czy pole jest puste jeśli nie losuje inne miejsce
             pond_array.get(y).get(x).set_type(Field_type.PLANKTON);
         }
     }
 
-    //zrobiłam coś takiego możesz zobaczyć jak to działa ale według mnie tak dziwnie jak masz inny pomysł to spróbuj zrobić
-    //w ogóle chba będzie trzeba dodać jakiś warunek w metodzie move ryby bo przez to że sie ten plankton spawnuje to może wystąpić
-    //taki błąd że ryba nie będzie sie miała gdzie ruszyc bo będzie otoczona planktonem i przez to nie pójdzie symulacja dalej bo sie będzie losować
-    //ciągle nowa pozycja dla ryby a warunek nie puści dalej
-    public static void respawn_plankton(){
+    public static void respawn_plankton(){//odradzanie planktonu
         double probability;
-        int x,y;
         for (ArrayList<Field> fields : pond_array ){
             for (Field field : fields){
                 if (field.get_is_empty()){//sprawdzanie czy pole jest puste

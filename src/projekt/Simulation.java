@@ -7,8 +7,8 @@ public class Simulation {
     private static Random random = new Random();
     private static int size_x = 19; // rozmiar planszy
     private static int size_y = 19; // rozmiar planszy
-    private static int amount_fish = 60; //początkowa liczba ryb
-    private static int amount_frogs = 10; //początkowa liczba żab
+    private static int amount_fish = 10; //początkowa liczba ryb
+    private static int amount_frogs = 5; //początkowa liczba żab
     private static int amount_plankton = 10; //początkowa liczba planktonu
     private static int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*65;
     private final View view;
@@ -37,7 +37,7 @@ public class Simulation {
     public static int getSize_y() {
         return size_y;
     }
-    public Simulation(){
+    public Simulation(){//konstruktor
         Pond pond = new Pond(size_x, size_y, amount_fish, amount_frogs, amount_plankton);
         view = new View(size_x*41,size_y*42);
         long start_time = System.currentTimeMillis();
@@ -53,10 +53,10 @@ public class Simulation {
     }
     private void update_pond() {//metoda aktualizująca stan planszy
         for (Agent agent: Pond.get_agents()){
-            if (agent.alive && !agent.win) agent.update();
+            if (agent.alive && !agent.win) agent.update();//update agentów
         }
-        Pond.delete_agent();
-        Pond.respawn_plankton();
+        Pond.delete_agent();//usuwanie agentów
+        Pond.respawn_plankton();//odradzanie planktonu
     }
     private void updateView() { //update widoku
         view.getContentPane().removeAll();
@@ -64,14 +64,13 @@ public class Simulation {
         view.revalidate();
         view.repaint();
     }
-    private void simulate() {
+    private void simulate() {//metoda wykonująca symulacje
         System.out.println("Liczba żab   | Liczba ryb   |Liczba planktonu"  );
-        int x = 0;
         int amount_adult_frogs=0;
-        do {//pozmieniałam troche z tym czasem nie działa to jakoś mega szybko ale przynajmniej sie wyświetla każdy update
+        do {
             long start_time = System.currentTimeMillis();
             update_pond();  // Aktualizacja stanu stawu
-            SwingUtilities.invokeLater(this::updateView); //dodany dobry update widoku
+            SwingUtilities.invokeLater(this::updateView); //update widoku
             long elapsed_time = System.currentTimeMillis() - start_time;
             long sleep_time = TIME_STEP - elapsed_time;
             if (sleep_time < 0) sleep_time = 0;
@@ -79,17 +78,6 @@ public class Simulation {
                 Thread.sleep(sleep_time);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
-            }
-            int ile=0,ryby=0;
-            for (ArrayList<Field> list :Pond.pond_array){//dodałam to chwilowo żeby sprawdzać czy liczb żab w pond_array zgadza się z liczbą żywych żab
-                for (Field field : list){
-                    if (field.get_has_frog() || field.get_has_tadpole() || field.get_has_frogspawn()){
-                        ile++;
-                    }
-                    if (field.get_has_fish()){
-                        ryby++;
-                    }
-                }
             }
             amount_adult_frogs=0;
             for (ArrayList<Field> list :Pond.pond_array){//zliczanie pól typu frog na planszy
@@ -99,7 +87,6 @@ public class Simulation {
                     }
                 }
             }
-            x++;
             System.out.println("     "+amount_frogs + "      |      "+amount_fish+"      |       "+amount_plankton);
         } while (amount_fish>0 || amount_frogs!=amount_adult_frogs);//warunek działania symulacji liczba ryb większa od 0 lub nie wszystkie żywe żaby wyewoluowały
         System.out.println("Liczba wygranych żab: " + amount_frogs);
