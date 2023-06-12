@@ -7,7 +7,7 @@ public class Simulation {
     private static Random random = new Random();
     private static int size_x = 19; // rozmiar planszy
     private static int size_y = 19; // rozmiar planszy
-    private static int amount_fish = 60; //początkowa liczba ryb
+    private static int amount_fish = 20; //początkowa liczba ryb
     private static int amount_frogs = 10; //początkowa liczba żab
     private static int amount_plankton = 10; //początkowa liczba planktonu
     private static int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*65;
@@ -62,7 +62,7 @@ public class Simulation {
         System.out.println("Liczba żab   | Liczba ryb   |Liczba planktonu"  );
         int x = 0;
         int amount_adult_frogs=0;
-        do {//pozmieniałam troche z tym czasem nie działa to jakoś mega szybko ale przynajmniej sie wyświetla każdy update
+        do {
             long start_time = System.currentTimeMillis();
             update_pond();  // Aktualizacja stanu stawu
             SwingUtilities.invokeLater(this::updateView); //dodany dobry update widoku
