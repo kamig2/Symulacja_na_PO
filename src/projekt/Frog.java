@@ -22,7 +22,6 @@ public class Frog extends Agent  {
         if (eaten_field.get_has_tadpole()){//sprawdzanie czy na jedzonym polu znajduje się kijanka
             System.out.println("kijanka je kijanke");
             hunger=0;
-//            Simulation.set_amount_frogs();
             for (Agent agent: Pond.get_agents()){//usuwanie zjedzonej kijanki
                 if (agent instanceof Frog && agent.position_x==x && agent.position_y==y){
                     Pond.set_agents(Pond.get_agents().indexOf(agent));
@@ -74,7 +73,6 @@ public class Frog extends Agent  {
         if (growth_stage == Growth_stage.TADPOLE) hunger += 10;//zwiększanie głodu
         if (hunger == 100 && growth_stage!=Growth_stage.FROG) {
             System.out.println("żaba umiera");
-//            Simulation.set_amount_frogs();
             die();
         }
         if (alive) move();//poruszanie kijanki jeśli żyje

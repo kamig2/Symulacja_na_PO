@@ -4,10 +4,9 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Pond {
-    private static Random random = new Random();
-    private static double plankton_growth = 0.998;
+    private static final Random random = new Random();
     static ArrayList<ArrayList<Field>> pond_array;//dwuwymiarowa lista przechowujca pole
-    private static ArrayList<Agent> agents = new ArrayList<>();//lista agentów
+    private static final ArrayList<Agent> agents = new ArrayList<>();//lista agentów
     public static ArrayList<Agent> get_agents(){return agents;}
     public static void set_agents(int index) {agents.get(index).alive=false;}
     private void create_pond_array2D(int x, int y) {//metoda tworząca listę dwuwymiarową reprezentującą staw
@@ -78,7 +77,8 @@ public class Pond {
             for (Field field : fields){
                 if (field.get_is_empty()){//sprawdzanie czy pole jest puste
                     probability = random.nextDouble();//losowanie liczby rzeczywistej od 0 do 1
-                    if (probability>plankton_growth) {//jeżeli wylosowana liczba jest większa od ustalonego współczynnika to pole zmienia typ na plankton
+                    double plankton_growth = 0.998;
+                    if (probability> plankton_growth) {//jeżeli wylosowana liczba jest większa od ustalonego współczynnika to pole zmienia typ na plankton
                         field.set_type(Field_type.PLANKTON);
                         Simulation.set_amount_plankton2();//zwiększanie liczby planktonu
                     }
