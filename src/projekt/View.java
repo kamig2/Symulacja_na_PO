@@ -45,7 +45,7 @@ public class View extends JFrame {
             }
         }
     }
-    public void update_view() {
+    public void update_view() { //odświeżanie widoku
         getContentPane().removeAll();
         for (int i = 0; i < Simulation.get_size_y(); i++) {
             for (int j = 0; j < Simulation.get_size_x(); j++) {

@@ -15,7 +15,7 @@ public class Field {
         if (type==Field_type.TADPOLE) has_tadpole=true;
         if (type==Field_type.FROG) has_frog=true;
     }
-    public boolean get_is_empty(){
+    public boolean get_is_empty(){ //czy pole jest puste
         return is_empty;
     }
     public boolean get_has_plankton(){
@@ -31,7 +31,7 @@ public class Field {
         return has_tadpole;
     }
     public boolean get_has_frog(){return has_frog;}
-    public void set_type(Field_type type){//zamiana typu pola
+    public void set_type(Field_type type){// zamiana typu pola
         is_empty=false;
         has_fish=false;
         has_frogspawn=false;

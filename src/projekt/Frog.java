@@ -1,7 +1,5 @@
 package projekt;
-
 public class Frog extends Agent  {
-
     private int age=0;
     private enum Growth_stage{FROGSPAWN, TADPOLE, FROG}
     Growth_stage growth_stage = Growth_stage.FROGSPAWN;

@@ -30,7 +30,7 @@ public class Fish extends Agent{
         y1=position_y;//zmienne przechowujące poprzednią pozycje ryby
         x1=position_x;
         do {
-            do {//sing to zmienna w której losujemy czy odjąć czy dodac wylosowaną liczbe 0 lub 1 do aktualnej pozycji
+            do {//sign to zmienna w której losujemy czy odjąć czy dodac wylosowaną liczbe 0 lub 1 do aktualnej pozycji
                 sign=random.nextInt(2);
                 if (sign==0) x = position_x + random.nextInt(2);//losowanie liczby 0 lub 1 i dodawanie do pozycji x
                 else x = position_x - random.nextInt(2);//losowanie liczby 0 lub 1 i odejmowanie  od pozycji x

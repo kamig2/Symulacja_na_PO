@@ -12,24 +12,14 @@ public class Simulation {
     private static int amount_fish; //początkowa liczba ryb
     private static int amount_frogs; //początkowa liczba żab
     private static int amount_plankton = 10; //początkowa liczba planktonu
-    private static int TIME_STEP;
+    private static int TIME_STEP; // czas
     private final View view;
-    public static int get_size_x(){
-        return size_x;
-    }
-    public static int get_size_y(){
-        return size_y;
-    }
-    public static int set_amount_fish(){
-        return amount_fish--;
-    }
-    public static int set_amount_frogs(){
-        return amount_frogs--;
-    }
+    public static int get_size_x(){return size_x;}
+    public static int get_size_y(){return size_y;}
+    public static int set_amount_fish(){return amount_fish--;}
+    public static int set_amount_frogs(){return amount_frogs--;}
     public static int set_amount_plankton(){return amount_plankton--;}
-    public static void set_amount_plankton2(){
-        amount_plankton++;
-    }
+    public static void set_amount_plankton2(){amount_plankton++;}
     public Simulation(int initialFish, int initialFrogs){
         amount_fish = initialFish;
         amount_frogs = initialFrogs;
@@ -48,9 +38,7 @@ public class Simulation {
         }
     }
     private void update_pond() {//metoda aktualizująca stan planszy
-        for (Agent agent: Pond.get_agents()){
-            if (agent.alive && !agent.win) agent.update();
-        }
+        for (Agent agent: Pond.get_agents()){ if (agent.alive && !agent.win) agent.update(); }
         Pond.delete_agent();
         Pond.respawn_plankton();
     }
@@ -90,7 +78,6 @@ public class Simulation {
     public static void main(String[] args) {
         int initialFish = 20; // wartosci domyslne w przypadku błędnego podania
         int initialFrogs = 10;
-
         // Pobieranie wartości początkowych liczby ryb i żab od użytkownika
         try {
             Scanner scanner = new Scanner(System.in);
