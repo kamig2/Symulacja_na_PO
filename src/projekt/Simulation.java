@@ -12,7 +12,7 @@ public class Simulation {
     private static int amount_fish; //początkowa liczba ryb
     private static int amount_frogs; //początkowa liczba żab
     private static int amount_plankton = 10; //początkowa liczba planktonu
-    private static final int TIME_STEP = (amount_fish+amount_frogs+amount_plankton)*65;
+    private static int TIME_STEP;
     private final View view;
     public static int get_size_x(){
         return size_x;
@@ -33,6 +33,7 @@ public class Simulation {
     public Simulation(int initialFish, int initialFrogs){
         amount_fish = initialFish;
         amount_frogs = initialFrogs;
+        TIME_STEP=(amount_fish+amount_frogs+amount_plankton)*65;
         Pond pond = new Pond(size_x, size_y, amount_fish, amount_frogs, amount_plankton);
         view = new View(size_x*41,size_y*42);
         long start_time = System.currentTimeMillis();
